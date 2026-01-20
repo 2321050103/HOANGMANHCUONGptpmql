@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+    <div class="container mt-3">
+      <h1>BS5 Buttons - Hoàng Mạnh Cường_2321050103</h1>
+      <!--Bootstrap 5 cung cấp nhiều kiểu nút khác nhau-->
+      <h2>Button Styles</h2>
+      <button type="button" class="btn">Basic</button>
+      <button type="button" class="btn btn-primary">Primary</button>
+      <button type="button" class="btn btn-secondary">Secondary</button>
+      <button type="button" class="btn btn-success">Success</button>
+      <button type="button" class="btn btn-info">Info</button>
+      <button type="button" class="btn btn-warning">Warning</button>
+      <button type="button" class="btn btn-danger">Danger</button>
+      <button type="button" class="btn btn-dark">Dark</button>
+      <button type="button" class="btn btn-light">Light</button>
+      <button type="button" class="btn btn-link">Link</button> <br /><br />
+
+      <!--Các lớp nút có thể được sử dụng trên các phần tử <a>, <button>, hoặc <input>:-->
+      <a href="#" class="btn btn-success">Link Button</a>
+      <button type="button" class="btn btn-success">Button</button>
+      <input type="button" class="btn btn-success" value="Input Button" />
+      <input type="submit" class="btn btn-success" value="Submit Button" />
+      <input
+        type="reset"
+        class="btn btn-success"
+        value="Reset Button"
+      /><br /><br />
+
+      <!--Bootstrap 5 cũng cung cấp tám nút có đường viền/viền. Di chuyển chuột qua chúng để xem hiệu ứng "di chuột" bổ sung-->
+      <button type="button" class="btn btn-outline-primary">Primary</button>
+      <button type="button" class="btn btn-outline-secondary">Secondary</button>
+      <button type="button" class="btn btn-outline-success">Success</button>
+      <button type="button" class="btn btn-outline-info">Info</button>
+      <button type="button" class="btn btn-outline-warning">Warning</button>
+      <button type="button" class="btn btn-outline-danger">Danger</button>
+      <button type="button" class="btn btn-outline-dark">Dark</button>
+      <button type="button" class="btn btn-outline-light text-dark">
+        Light</button
+      ><br /><br />
+
+      <!--Sử dụng .btn-lglớp cho các nút lớn hoặc .btn-smlớp cho các nút nhỏ:-->
+      <button type="button" class="btn btn-primary btn-lg">Large</button>
+      <button type="button" class="btn btn-primary">Default</button>
+      <button type="button" class="btn btn-primary btn-sm">Small</button>
+      <br /><br />
+
+      <!--Để tạo nút khối trải dài toàn bộ chiều rộng của phần tử cha, hãy sử dụng .d-gridlớp "trợ giúp" trên phần tử cha:-->
+      <div class="d-grid">
+        <button type="button" class="btn btn-primary btn-block">
+          Full-Width Button</button
+        ><br /><br />
+      </div>
+      <!--Nếu bạn có nhiều nút ở cấp độ khối, bạn có thể kiểm soát khoảng cách giữa chúng bằng .gap-*lớp:-->
+      <div class="d-grid gap-3">
+        <button type="button" class="btn btn-primary btn-block">
+          Full-Width Button
+        </button>
+        <button type="button" class="btn btn-primary btn-block">
+          Full-Width Button
+        </button>
+        <button type="button" class="btn btn-primary btn-block">
+          Full-Width Button</button
+        ><br /><br />
+      </div>
+
+      <!--Một nút có thể được thiết lập ở trạng thái hoạt động (có vẻ như được nhấn) hoặc trạng thái vô hiệu hóa (không thể nhấp vào):
+        Lớp này .activelàm cho nút trông như được nhấn và disabledthuộc tính làm cho nút không thể nhấp được. Lưu ý rằng các phần tử <a> không hỗ trợ thuộc tính disabled và do đó phải sử dụng .disabledlớp để làm cho nó trông như bị vô hiệu hóa.-->
+      <button type="button" class="btn btn-primary active">
+        Active Primary
+      </button>
+      <button type="button" class="btn btn-primary" disabled>
+        Disabled Primary
+      </button>
+      <a href="#" class="btn btn-primary disabled">Disabled Link</a><br /><br />
+
+      <!--Nút xoay: Bạn cũng có thể thêm "spinner" vào một nút-->
+      <button class="btn btn-primary">
+        <span class="spinner-border spinner-border-sm"></span>
+      </button>
+
+      <button class="btn btn-primary">
+        <span class="spinner-border spinner-border-sm"></span>
+        Loading..
+      </button>
+
+      <button class="btn btn-primary" disabled>
+        <span class="spinner-border spinner-border-sm"></span>
+        Loading..
+      </button>
+
+      <button class="btn btn-primary" disabled>
+        <span class="spinner-grow spinner-grow-sm"></span>
+        Loading..
+      </button>
+    </div>
+  </body>
+</html>

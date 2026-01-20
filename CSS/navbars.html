@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+    <h1>BS5 Navbars - Hoàng Mạnh Cường</h1>
+    <!--Với Bootstrap, thanh điều hướng có thể mở rộng hoặc thu gọn tùy thuộc vào kích thước màn hình.
+    Một thanh điều hướng chuẩn được tạo bằng .navbar lớp này, theo sau là một lớp thu gọn có khả năng phản hồi: .navbar-expand-xxl|xl|lg|md|sm (xếp chồng thanh điều hướng theo chiều dọc trên màn hình xxlarge, extra large, large, medium hoặc small).
+    Để thêm liên kết bên trong thanh điều hướng, hãy sử dụng một <ul>phần tử (hoặc một <div>) với class="navbar-nav". Sau đó thêm <li>các phần tử có một .nav-itemlớp theo sau là một <a>phần tử có một .nav-linklớp-->
+    <nav class="navbar navbar-expand-sm bg-light">
+      <div class="container-fluid">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link 1</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link 2</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link 3</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid mt-3">
+      <h3>Basic Navbar Example</h3>
+      <p>
+        A navigation bar is a navigation header that is placed at the top of the
+        page.
+      </p>
+      <p>
+        The navbar-expand-xxl|xl|lg|md|sm class determines when the navbar
+        should stack vertically (on xxlarge, extra large, large, medium or small
+        screens).
+      </p>
+    </div>
+    <br /><br />
+
+    <!--Xóa .navbar-expand-*lớp để tạo thanh điều hướng luôn theo chiều dọc-->
+    <nav class="navbar bg-light">
+      <div class="container-fluid">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link 1</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link 2</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link 3</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid mt-3">
+      <h3>Vertical Navbar Example</h3>
+      <p>
+        A navigation bar is a navigation header that is placed at the top of the
+        page.
+      </p>
+    </div>
+    <br /><br />
+
+    <!--Thêm .justify-content-centerlớp để căn giữa thanh điều hướng:-->
+    <nav class="navbar navbar-expand-sm bg-light justify-content-center">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link 1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link 2</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link 3</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid mt-3">
+      <h3>Centered Navbar</h3>
+      <p>Use the .justify-content-center class to center the navigation bar.</p>
+      <p>
+        In this example, the navbar will be centered on medium, large and extra
+        large screens. On small screens it will be displayed vertically and
+        left-aligned (because of the .navbar-expand-sm class).
+      </p>
+    </div>
+    <br /><br />
+
+    <!--Sử dụng bất kỳ .bg-colorlớp nào để thay đổi màu nền của thanh điều hướng ( .bg-primary, .bg-success, .bg-info, .bg-warning, .bg-danger, .bg-secondary, .bg-darkvà .bg-light)
+    Mẹo: Thêm màu chữ trắng cho tất cả các liên kết trong thanh điều hướng bằng .navbar-darklớp hoặc sử dụng .navbar-lightlớp để thêm màu chữ đen .-->
+    <!-- Grey with black text -->
+    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+      <div class="container-fluid">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Active</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <br /><br />
+
+    <!-- Black background with white text -->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">...</nav>
+
+    <!-- Blue background with white text -->
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">...</nav>
+
+    <!--Lớp này .navbar-brandđược sử dụng để làm nổi bật tên thương hiệu/logo/dự án của trang của bạn-->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Logo</a>
+      </div>
+    </nav>
+    <br /><br />
+
+    <!--Khi sử dụng .navbar-brandlớp với hình ảnh, Bootstrap 5 sẽ tự động định dạng hình ảnh sao cho vừa với thanh điều hướng theo chiều dọc.-->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img
+            src="IMG/logo.png"
+            alt="Avatar Logo"
+            style="width: 40px"
+            class="rounded-pill"
+          />
+        </a>
+      </div>
+    </nav>
+    <br /><br />
+
+    <!--Sử dụng .navbar-textlớp này để căn chỉnh theo chiều dọc bất kỳ thành phần nào bên trong thanh điều hướng không phải là liên kết (đảm bảo khoảng đệm và màu chữ phù hợp).-->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <div class="container-fluid">
+        <span class="navbar-text">Navbar text</span>
+      </div>
+    </nav>
+    <br /><br />
+
+    <!--Thông thường, đặc biệt là trên màn hình nhỏ, bạn muốn ẩn các liên kết điều hướng và thay thế chúng bằng một nút hiển thị chúng khi nhấp vào.
+    Để tạo thanh điều hướng có thể thu gọn, hãy sử dụng nút có . Sau đó, bọc nội dung thanh điều hướng (liên kết, v.v.) bên trong phần tử <div> có , theo sau là một id khớp với nút: " thetarget ".class="navbar-toggler", data-bs-toggle="collapse" and data-bs-target="#thetarget"class="collapse navbar-collapse"data-bs-target-->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Logo</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <br /><br />
+
+    <!--Thanh điều hướng cũng có thể chứa menu thả xuống:-->
+    <li class="nav-item dropdown">
+      <a
+        class="nav-link dropdown-toggle"
+        href="#"
+        role="button"
+        data-bs-toggle="dropdown"
+        >Dropdown</a
+      >
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Link</a></li>
+        <li><a class="dropdown-item" href="#">Another link</a></li>
+        <li><a class="dropdown-item" href="#">A third link</a></li>
+      </ul>
+    </li>
+    <br /><br />
+
+    <!--Bạn cũng có thể đưa biểu mẫu vào thanh điều hướng:-->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mynavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mynavbar">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="text" placeholder="Search" />
+            <button class="btn btn-primary" type="button">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <br /><br />
+
+    <!--Thanh điều hướng cũng có thể được cố định ở đầu hoặc cuối trang.
+    Thanh điều hướng cố định sẽ luôn hiển thị ở vị trí cố định (trên cùng hoặc dưới cùng) bất kể trang đang cuộn.
+    Lớp này .fixed-toplàm cho thanh điều hướng được cố định ở trên cùng -->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">...</nav>
+
+    <!--Sử dụng .fixed-bottomlớp này để giữ thanh điều hướng ở cuối trang:-->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom">
+      ...
+    </nav>
+
+    <!--Sử dụng .sticky-toplớp để cố định/giữ thanh điều hướng ở đầu trang khi bạn cuộn qua nó. Lưu ý: Lớp này không hoạt động trong IE11 và các phiên bản cũ hơn (sẽ coi nó là position:relative).-->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+      ...
+    </nav>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>HTML Forms - Hoang Manh Cuong_2321050103</h2>
+    <!--Thuộc tính hành động
+Thuộc tính này actionxác định hành động sẽ được thực hiện khi biểu mẫu được gửi.
+
+Thông thường, dữ liệu biểu mẫu sẽ được gửi đến một tệp trên máy chủ khi người dùng nhấp vào nút gửi.
+
+Trong ví dụ dưới đây, dữ liệu biểu mẫu được gửi đến một tệp có tên "action_page.php".-->
+    <form
+      action="/action_page.php"
+      method="get"
+      target="_blank"
+      autocomplete="on"
+    >
+      <!--Thuộc tính Tự động hoàn thành
+Thuộc autocompletetính này chỉ rõ liệu biểu mẫu có nên bật hay tắt tính năng tự động hoàn thành hay không.
+
+Khi bật tính năng tự động hoàn thành, trình duyệt sẽ tự động hoàn thành các giá trị dựa trên các giá trị mà người dùng đã nhập trước đó.-->
+
+      <!--Thuộc tính này novalidatelà thuộc tính boolean.
+
+Khi có mặt, nó chỉ rõ rằng dữ liệu biểu mẫu (đầu vào) không được xác thực khi gửi.
+<form action="/action_page.php" novalidate> -->
+
+      <!--Thuộc tính mục tiêu
+Thuộc tính này targetchỉ định nơi hiển thị phản hồi nhận được sau khi gửi biểu mẫu.
+
+Thuộc targettính có thể có một trong các giá trị sau:
+
+Value	Description
+_blank	The response is displayed in a new window or tab
+_self	The response is displayed in the current window
+_parent	The response is displayed in the parent frame
+_top	The response is displayed in the full body of the window
+framename	The response is displayed in a named iframe
+Giá trị mặc định có _selfnghĩa là phản hồi sẽ mở trong cửa sổ hiện tại.-->
+
+      <!--Thuộc tính phương pháp
+Thuộc tính này methodchỉ định phương thức HTTP được sử dụng khi gửi dữ liệu biểu mẫu.
+
+Dữ liệu biểu mẫu có thể được gửi dưới dạng biến URL (với method="get") hoặc dưới dạng giao dịch sau HTTP (với method="post").
+
+Phương thức HTTP mặc định khi gửi dữ liệu biểu mẫu là GET. -->
+      <label for="fname">First name:</label><br />
+      <input type="text" id="fname" name="fname" value="John" /><br />
+      <label for="lname">Last name:</label><br />
+      <input type="text" id="lname" name="lname" value="Doe" /><br /><br />
+      <input type="submit" value="Submit" />
+    </form>
+
+    <p>
+      If you click the "Submit" button, the form-data will be sent to a page
+      called "/action_page.php".
+    </p>
+  </body>
+</html>

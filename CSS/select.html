@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<!--Menu chọn được sử dụng nếu bạn muốn cho phép người dùng chọn từ nhiều tùy chọn.
+
+Để tạo kiểu cho menu chọn trong Bootstrap 5, hãy thêm .form-selectlớp vào phần tử <select>:-->
+    <div class="container mt-3">
+        <h2>Select Menu - Hoàng Mạnh Cường</h2>
+        <p>To style a select menu in Bootstrap 5, add the .form-select class to the select element:</p>
+        <form action="/action_page.php">
+            <label for="sel1" class="form-label">Select list (select one):</label>
+            <select class="form-select" id="sel1" name="sellist1">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            </select>
+            <br>
+            
+            <label for="sel2" class="form-label">Mutiple select list (hold shift to select more than one):</label>
+            <select multiple class="form-select" id="sel2" name="sellist2">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            </select>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+    </div>
+
+    <!--Sử dụng lớp .form-select-lghoặc .form-select-smđể thay đổi kích thước của menu chọn:-->
+    <select class="form-select form-select-lg">
+    <select class="form-select">
+    <select class="form-select form-select-sm">
+
+    <!--Sử dụng disabledthuộc tính để vô hiệu hóa menu chọn:-->
+    <select class="form-select" disabled>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+    </select>
+
+    <!--Bootstrap cũng sẽ định dạng danh sách dữ liệu, đây là danh sách các tùy chọn được xác định trước cho phần tử <input>:-->
+    <label for="browser" class="form-label">Choose your browser from the list:</label>
+    <input class="form-control" list="browsers" name="browser" id="browser">
+    <datalist id="browsers">
+        <option value="Edge">
+        <option value="Firefox">
+        <option value="Chrome">
+        <option value="Opera">
+        <option value="Safari">
+    </datalist>
+
+</body>
+</html>

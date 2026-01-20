@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+    <!--Để tạo một hộp chứa flexbox và chuyển đổi các thành phần con trực tiếp thành các mục flex, hãy sử dụng d-flexlớp:-->
+    <div class="container mt-3">
+      <h2>Flex - Hoàng Mạnh Cường</h2>
+      <p>
+        To create a flexbox container and transform direct children into flex
+        items, use the d-flex class:
+      </p>
+      <div class="d-flex p-3 bg-secondary text-white">
+        <div class="p-2 bg-info">Flex item 1</div>
+        <div class="p-2 bg-warning">Flex item 2</div>
+        <div class="p-2 bg-primary">Flex item 3</div>
+      </div>
+    </div>
+
+    <!--Để tạo một hộp chứa flexbox nội tuyến, hãy sử dụng d-inline-flexlớp:-->
+    <div class="d-inline-flex p-3 bg-secondary text-white">
+      <div class="p-2 bg-info">Flex item 1</div>
+      <div class="p-2 bg-warning">Flex item 2</div>
+      <div class="p-2 bg-primary">Flex item 3</div>
+    </div>
+
+    <!--Sử dụng .flex-rowđể hiển thị các mục flex theo chiều ngang (cạnh nhau). Đây là mặc định.
+
+    Mẹo: Sử dụng .flex-row-reverse để căn phải theo hướng ngang:-->
+    <div class="d-flex flex-row bg-secondary">
+      <div class="p-2 bg-info">Flex item 1</div>
+      <div class="p-2 bg-warning">Flex item 2</div>
+      <div class="p-2 bg-primary">Flex item 3</div>
+    </div>
+
+    <div class="d-flex flex-row-reverse bg-secondary">
+      <div class="p-2 bg-info">Flex item 1</div>
+      <div class="p-2 bg-warning">Flex item 2</div>
+      <div class="p-2 bg-primary">Flex item 3</div>
+    </div>
+
+    <!--Sử dụng .flex-columnđể hiển thị các mục flex theo chiều dọc (chồng lên nhau) hoặc .flex-column-reverse để đảo ngược hướng dọc:-->
+    <div class="d-flex flex-column">
+      <div class="p-2 bg-info">Flex item 1</div>
+      <div class="p-2 bg-warning">Flex item 2</div>
+      <div class="p-2 bg-primary">Flex item 3</div>
+    </div>
+
+    <div class="d-flex flex-column-reverse">
+      <div class="p-2 bg-info">Flex item 1</div>
+      <div class="p-2 bg-warning">Flex item 2</div>
+      <div class="p-2 bg-primary">Flex item 3</div>
+    </div>
+
+    <!--Sử dụng .justify-content-*các lớp để thay đổi sự căn chỉnh của các mục flex. Các lớp hợp lệ là start(mặc định), end, center, betweenhoặc around:-->
+    <div class="d-flex justify-content-start">...</div>
+    <div class="d-flex justify-content-end">...</div>
+    <div class="d-flex justify-content-center">...</div>
+    <div class="d-flex justify-content-between">...</div>
+    <div class="d-flex justify-content-around">...</div>
+
+    <!--Sử dụng .flex-filltrên các mục flex để buộc chúng có chiều rộng bằng nhau:-->
+    <div class="d-flex">
+      <div class="p-2 bg-info flex-fill">Flex item 1</div>
+      <div class="p-2 bg-warning flex-fill">Flex item 2</div>
+      <div class="p-2 bg-primary flex-fill">Flex item 3</div>
+    </div>
+
+    <!--Sử dụng .flex-grow-1trên một mục flex để chiếm phần không gian còn lại. Trong ví dụ dưới đây, hai mục flex đầu tiên chiếm phần không gian cần thiết của chúng, trong khi mục cuối cùng chiếm phần không gian còn lại:-->
+    <div class="d-flex">
+      <div class="p-2 bg-info">Flex item 1</div>
+      <div class="p-2 bg-warning">Flex item 2</div>
+      <div class="p-2 bg-primary flex-grow-1">Flex item 3</div>
+    </div>
+
+    <!--Thay đổi thứ tự trực quan của một hoặc nhiều mục flex cụ thể bằng .ordercác lớp. Các lớp hợp lệ là từ 0 đến 5, trong đó số thấp nhất có mức ưu tiên cao nhất (thứ tự 1 được hiển thị trước thứ tự 2, v.v.):-->
+    <div class="d-flex bg-secondary">
+      <div class="p-2 bg-info order-3">Flex item 1</div>
+      <div class="p-2 bg-warning order-2">Flex item 2</div>
+      <div class="p-2 bg-primary order-1">Flex item 3</div>
+    </div>
+
+    <!--Dễ dàng thêm lề tự động vào các mục flex bằng .ms-auto(đẩy các mục sang phải) hoặc bằng cách sử dụng .me-auto(đẩy các mục sang trái):-->
+    <div class="d-flex bg-secondary">
+      <div class="p-2 ms-auto bg-info">Flex item 1</div>
+      <div class="p-2 bg-warning">Flex item 2</div>
+      <div class="p-2 bg-primary">Flex item 3</div>
+    </div>
+
+    <div class="d-flex bg-secondary">
+      <div class="p-2 bg-info">Flex item 1</div>
+      <div class="p-2 bg-warning">Flex item 2</div>
+      <div class="p-2 me-auto bg-primary">Flex item 3</div>
+    </div>
+
+    <!--Kiểm soát cách các mục flex được bao quanh trong một vùng chứa flex bằng .flex-nowrap(mặc định) .flex-wraphoặc .flex-wrap-reverse.-->
+    <div class="d-flex flex-wrap">..</div>
+
+    <div class="d-flex flex-wrap-reverse">..</div>
+
+    <div class="d-flex flex-nowrap">..</div>
+
+    <!--Kiểm soát sự căn chỉnh theo chiều dọc của các mục flex được thu thập bằng .align-content-* các lớp. Các lớp hợp lệ là .align-content-start(mặc định), .align-content-end, .align-content-center, .align-content-between, .align-content-aroundvà .align-content-stretch.-->
+    <div class="d-flex flex-wrap align-content-start">..</div>
+
+    <div class="d-flex flex-wrap align-content-end">..</div>
+
+    <div class="d-flex flex-wrap align-content-center">..</div>
+
+    <div class="d-flex flex-wrap align-content-around">..</div>
+
+    <div class="d-flex flex-wrap align-content-stretch">..</div>
+
+    <!--Kiểm soát sự căn chỉnh theo chiều dọc của các hàng đơn của các mục flex bằng .align-items-* các lớp. Các lớp hợp lệ là .align-items-start, .align-items-end, .align-items-center, .align-items-baseline, và .align-items-stretch (mặc định).-->
+    <div class="d-flex align-items-start">..</div>
+
+    <div class="d-flex align-items-end">..</div>
+
+    <div class="d-flex align-items-center">..</div>
+
+    <div class="d-flex align-items-baseline">..</div>
+
+    <div class="d-flex align-items-stretch">..</div>
+
+    <!--Kiểm soát sự căn chỉnh theo chiều dọc của một mục flex được chỉ định bằng .align-self-* các lớp. Các lớp hợp lệ là .align-self-start, .align-self-end, .align-self-center, .align-self-baseline, và .align-self-stretch (mặc định).-->
+    <div class="d-flex bg-light" style="height: 150px">
+      <div class="p-2 border">Flex item 1</div>
+      <div class="p-2 border align-self-start">Flex item 2</div>
+      <div class="p-2 border">Flex item 3</div>
+    </div>
+
+    <!--Tất cả các lớp flex đều đi kèm với các lớp phản hồi bổ sung, giúp dễ dàng thiết lập một lớp flex cụ thể trên một kích thước màn hình cụ thể.
+    Biểu tượng này *có thể được thay thế bằng sm, md, lg, xl hoặc xxl, tương ứng với màn hình nhỏ, trung bình, lớn, cực lớn và cực lớn.
+    Class	Description	Example
+    Flex Container	 	 
+    .d-*-flex	Creates a flexbox container for different screens	
+    .d-*-inline-flex	Creates an inline flexbox container for different screens	
+    Direction	 	 
+    .flex-*-row	Display flex items horizontally on different screens	
+    .flex-*-row-reverse	Display flex items horizontally, and right-aligned, on different screens	
+    .flex-*-column	Display flex items vertically on different screens	
+    .flex-*-column-reverse	Display flex items vertically, with reversed order, on different screens screens	
+    Justified Content	 	 
+    .justify-content-*-start	Display flex items from the start (left-aligned) on different screens	
+    .justify-content-*-end	Display flex items at the end (right-aligned) on different screens	
+    .justify-content-*-center	Display flex items in the center of a flex container on different screens	
+    .justify-content-*-between	Display flex items in "between" on different screens	
+    .justify-content-*-around	Display flex items "around" on different screens	
+    Fill / Equal Width	 	 
+    .flex-*-fill	Force flex items into equal widths on different screens	
+    Grow	 	 
+    .flex-*-grow-0	Don't make the items grow on different screens	 
+    .flex-*-grow-1	Make items grow on different screens	 
+    Shrink	 	 
+    .flex-*-shrink-0	Don't make the items shrink on diferent screens	 
+    .flex-*-shrink-1	Make items shrink on different screens	 
+    Order	 	 
+    .order-*-0-12	Change the order from 0 to 5 on small screens	
+    Wrap	 	 
+    .flex-*-nowrap	Don't wrap items on different screens	
+    .flex-*-wrap	Wrap items on different screens	
+    .flex-*-wrap-reverse	Reverse the wrapping of items on different screens	
+    Align Content	 	 
+    .align-content-*-start	Align gathered items from the start on different screens	
+    .align-content-*-end	Align gathered items at the end on different screens	
+    .align-content-*-center	Align gathered items in the center on different screens	
+    .align-content-*-around	Align gathered items "around" on different screens	
+    .align-content-*-stretch	Stretch gathered items on different screens	
+    Align Items	 	 
+    .align-items-*-start	Align single rows of items from the start on different screens	
+    .align-items-*-end	Align single rows of items at the end on different screens	
+    .align-items-*-center	Align single rows of items in the center on different screens	
+    .align-items-*-baseline	Align single rows of items on the baseline on different screens	
+    .align-items-*-stretch	Stretch single rows of items on different screens	
+    Align Self	 	 
+    .align-self-*-start	Align a flex item from the start on different screens	
+    .align-self-*-end	Align a flex item at the end on different screens	
+    .align-self-*-center	Align a flex item in the center on different screens	
+    .align-self-*-baseline	Align a flex item on the baseline on different screens	
+    .align-self-*-stretch	Stretch a flex item on different screens	
+    -->
+  </body>
+</html>

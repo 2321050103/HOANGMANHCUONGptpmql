@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+    <!--Theo mặc định, khi sử dụng nhãn, chúng thường xuất hiện ở trên cùng của trường nhập:
+Với nhãn nổi, bạn có thể chèn nhãn vào bên trong trường nhập và làm cho nhãn nổi/hoạt hình khi bạn nhấp vào trường nhập
+Lưu ý về nhãn nổi: Các phần tử <label> phải đứng sau phần tử <input> và placeholderthuộc tính này là bắt buộc đối với mỗi phần tử <input> (mặc dù nó không được hiển thị)-->
+    <div class="container mt-3">
+      <h2>Floating Labels - Inputs -Hoàng Mạnh Cường</h2>
+      <p>Click inside the input field to see the floating label effect:</p>
+      <form action="/action_page.php">
+        <div class="form-floating mb-3 mt-3">
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            placeholder="Enter email"
+            name="email"
+          />
+          <label for="email">Email</label>
+        </div>
+        <div class="form-floating mt-3 mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="pwd"
+            placeholder="Enter password"
+            name="pswd"
+          />
+          <label for="pwd">Password</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <!--Nó cũng có tác dụng với vùng văn bản-->
+    <div class="form-floating">
+      <textarea
+        class="form-control"
+        id="comment"
+        name="text"
+        placeholder="Comment goes here"
+      ></textarea>
+      <label for="comment">Comments</label>
+    </div>
+
+    <!--Bạn cũng có thể sử dụng "floating-labels" trên các menu được chọn. Tuy nhiên, chúng sẽ không nổi/hoạt hình. Nhãn sẽ luôn xuất hiện ở góc trên bên trái, bên trong menu được chọn:-->
+    <div class="form-floating">
+      <select class="form-select" id="sel1" name="sellist">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select>
+      <label for="sel1" class="form-label">Select list (select one):</label>
+    </div>
+  </body>
+</html>

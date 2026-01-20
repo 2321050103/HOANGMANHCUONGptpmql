@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>The input attribute -Hoang Manh Cuong_2321050103</h1>
+
+    <p>Thuộc tính đầu vào value chỉ định giá trị ban đầu cho trường đầu vào</p>
+    <p>
+      Thuộc tính input readonlychỉ rõ rằng trường nhập liệu chỉ có thể đọc.
+      Không thể sửa đổi trường nhập chỉ đọc (tuy nhiên, người dùng có thể nhấn
+      tab đến trường đó, tô sáng và sao chép văn bản từ trường đó). Giá trị của
+      trường nhập chỉ đọc sẽ được gửi khi gửi biểu mẫu
+    </p>
+    <form action="/action_page.php" autocomplete="on">
+      <!--Thuộc tính đầu vào autocompletechỉ định liệu biểu mẫu hoặc trường đầu vào có nên bật hay tắt tính năng tự động hoàn thành hay không.
+        Tự động hoàn thành cho phép trình duyệt dự đoán giá trị. Khi người dùng bắt đầu nhập vào một trường, trình duyệt sẽ hiển thị các tùy chọn để điền vào trường, dựa trên các giá trị đã nhập trước đó.
+        Thuộc tính này autocompletehoạt động với các kiểu <form>sau <input>: văn bản, tìm kiếm, url, điện thoại, email, mật khẩu, chọn ngày, phạm vi và màu sắc.-->
+
+      <label for="fname">First name:</label><br />
+      <input
+        type="text"
+        id="fname"
+        name="fname"
+        value="John"
+        size="50"
+        readonly
+      /><br />
+      <label for="lname">Last name:</label><br />
+      <input type="text" id="lname" name="lname" value="Doe" /><br /><br />
+      <input type="submit" value="Submit" />
+      <!--Thuộc tính input disabledchỉ rõ trường nhập liệu nào đó sẽ bị vô hiệu hóa.
+        Trường nhập liệu bị vô hiệu hóa sẽ không sử dụng được và không thể nhấp vào.
+        Giá trị của trường nhập liệu bị vô hiệu hóa sẽ không được gửi khi gửi biểu mẫu
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" name="fname" value="John" disabled><br>-->
+      <label for="pin">PIN:</label><br /><br />
+      <input
+        type="text"
+        id="pin"
+        name="pin"
+        maxlength="4"
+        size="4"
+      /><br /><br />
+      <!--Thuộc tính input sizechỉ định chiều rộng hiển thị, tính bằng ký tự, của trường nhập liệu.
+        Giá trị mặc định size là 20.
+        Thuộc tính input maxlengthchỉ định số ký tự tối đa được phép trong một trường nhập liệu.-->
+      <label for="datemax">Enter a date before 1980-01-01:</label>
+      <input
+        type="date"
+        id="datemax"
+        name="datemax"
+        max="1979-12-31"
+      /><br /><br />
+
+      <label for="datemin">Enter a date after 2000-01-01:</label>
+      <input
+        type="date"
+        id="datemin"
+        name="datemin"
+        min="2000-01-02"
+      /><br /><br />
+
+      <label for="quantity">Quantity (between 1 and 5):</label>
+      <input
+        type="number"
+        id="quantity"
+        name="quantity"
+        min="1"
+        max="5"
+      /><br /><br />
+      <!--Đầu vào minvà maxcác thuộc tính chỉ định giá trị tối thiểu và tối đa cho một trường đầu vào.
+        Các thuộc tính minvà maxhoạt động với các kiểu đầu vào sau: số, phạm vi, ngày, datetime-local, tháng, giờ và tuần.-->
+      <label for="files">Select files:</label>
+      <input type="file" id="files" name="files" multiple /><br /><br />
+      <!--Thuộc tính đầu vào multiplechỉ định rằng người dùng được phép nhập nhiều hơn một giá trị vào một trường đầu vào.
+        Thuộc tính này multiplehoạt động với các kiểu đầu vào sau: email và tệp.-->
+
+      <label for="country_code">Country code:</label>
+      <input
+        type="text"
+        id="country_code"
+        name="country_code"
+        pattern="[A-Za-z]{3}"
+        title="Three letter country code"
+      /><br /><br />
+      <!--Thuộc tính đầu vào patternchỉ định một biểu thức chính quy mà giá trị của trường đầu vào được kiểm tra khi biểu mẫu được gửi.
+        Thuộc tính này patternhoạt động với các kiểu đầu vào sau: văn bản, ngày tháng, tìm kiếm, url, điện thoại, email và mật khẩu.-->
+
+      <label for="phone">Enter a phone number:</label>
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        placeholder="123-45-678"
+        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+      /><br /><br />
+      <!--Thuộc tính đầu vào placeholderchỉ định một gợi ý ngắn mô tả giá trị mong đợi của trường đầu vào (giá trị mẫu hoặc mô tả ngắn về định dạng mong đợi).
+        Gợi ý ngắn sẽ hiển thị trong trường nhập trước khi người dùng nhập giá trị.
+        Thuộc tính này placeholderhoạt động với các kiểu đầu vào sau: văn bản, tìm kiếm, url, số, điện thoại, email và mật khẩu.-->
+
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required /><br /><br />
+      <!--Thuộc tính input requiredchỉ định rằng trường nhập dữ liệu phải được điền trước khi gửi biểu mẫu.
+        Thuộc tính này requiredhoạt động với các kiểu đầu vào sau: văn bản, tìm kiếm, url, điện thoại, email, mật khẩu, bộ chọn ngày, số, hộp kiểm, radio và tệp.-->
+
+      <label for="points">Points:</label>
+      <input type="number" id="points" name="points" step="3" /><br /><br />
+      <!--Thuộc tính đầu vào stepchỉ định khoảng số hợp lệ cho một trường đầu vào.
+        Thuộc tính này stephoạt động với các kiểu đầu vào sau: số, phạm vi, ngày, datetime-local, tháng, giờ và tuần. -->
+
+      <!--Thuộc tính input autofocuschỉ định rằng trường nhập liệu sẽ tự động được lấy tiêu điểm khi trang tải xong.-->
+
+      <input
+        type="image"
+        src="IMG/submit.gif"
+        alt="Submit"
+        width="48"
+        height="48"
+      /><br /><br />
+      <!--Đầu vào heightvà widthcác thuộc tính chỉ định chiều cao và chiều rộng của một <input type="image">phần tử.-->
+
+      <input list="browsers" />
+      <datalist id="browsers">
+        <option value="Edge"></option>
+        <option value="Firefox"></option>
+        <option value="Chrome"></option>
+        <option value="Opera"></option>
+        <option value="Safari"></option>
+      </datalist>
+
+      <!--Thuộc tính input listđề cập đến một <datalist>phần tử chứa các tùy chọn được xác định trước cho phần tử <input>.-->
+    </form>
+  </body>
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+    <h1>Hoàng MẠNH cường</h1>
+    <!--Bảng Bootstrap 5 cơ bản có phần đệm nhẹ và các ngăn chia theo chiều ngang.
+    Lớp này .table bổ sung kiểu dáng cơ bản cho bảng-->
+    <div class="container mt-3">
+      <h2>Basic Table</h2>
+      <p>
+        The .table class adds basic styling (light padding and horizontal
+        dividers) to a table:
+      </p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--Lớp này .table-striped thêm các sọc ngựa vằn vào bảng:-->
+    <div class="container mt-3">
+      <h2>Striped Rows</h2>
+      <p>The .table-striped class adds zebra-stripes to a table:</p>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--Lớp này .table-borderedthêm đường viền vào tất cả các cạnh của bảng và ô:-->
+    <div class="container mt-3">
+      <h2>Bordered Table</h2>
+      <p>
+        The .table-bordered class adds borders on all sides of the table and the
+        cells:
+      </p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--Lớp này .table-hoverthêm hiệu ứng di chuột (màu nền xám) vào các hàng của bảng:-->
+    <div class="container mt-3">
+      <h2>Hover Rows</h2>
+      <p>
+        The .table-hover class enables a hover state (grey background on mouse
+        over) on table rows:
+      </p>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--Lớp này .table-darkthêm nền đen vào bảng:-->
+    <div class="container mt-3">
+      <h2>Black/Dark Table</h2>
+      <p>The .table-dark class adds a black background to the table:</p>
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--Kết hợp .table-darkvà .table-stripedđể tạo ra một bảng sọc tối màu:-->
+    <div class="container mt-3">
+      <h2>Dark Striped Table</h2>
+      <p>
+        Combine .table-dark and .table-striped to create a dark, striped table:
+      </p>
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--Bảng tối có thể di chuyển
+    Lớp này .table-hoverthêm hiệu ứng di chuột (màu nền xám) vào các hàng của bảng-->
+    <div class="container mt-3">
+      <h2>Hoverable Dark Table</h2>
+      <p>
+        The .table-hover class adds a hover effect (grey background color) on
+        table rows:
+      </p>
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--Bảng không viền
+    Lớp này .table-borderlessxóa đường viền khỏi bảng:-->
+    <div class="container mt-3">
+      <h2>Borderless Table</h2>
+      <p>The .table-borderless class removes borders from the table:</p>
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--Contextual classes:  có thể được sử dụng để tô màu toàn bộ bảng ( <table>), các hàng bảng ( <tr>) hoặc các ô bảng ( <td>).
+    Lớp học	        Sự miêu tả
+    .table-primary	Màu xanh: Biểu thị một hành động quan trọng
+    .table-success	Màu xanh lá cây: Biểu thị một hành động thành công hoặc tích cực
+    .table-danger	Màu đỏ: Biểu thị hành động nguy hiểm hoặc có khả năng tiêu cực
+    .table-info	Màu xanh nhạt: Biểu thị sự thay đổi hoặc hành động mang tính thông tin trung tính
+    .table-warning	Màu cam: Biểu thị cảnh báo có thể cần chú ý
+    .table-active	Xám: Áp dụng màu di chuột vào hàng bảng hoặc ô bảng
+    .table-secondary	Màu xám: Biểu thị một hành động ít quan trọng hơn một chút
+    .table-light	Nền bàn hoặc hàng bàn màu xám nhạt
+    .table-dark	Nền bảng hoặc hàng bảng màu xám đậm
+    -->
+    <div class="container mt-3">
+      <h2>Contextual Classes</h2>
+      <p>
+        Contextual classes can be used to color the table, table rows or table
+        cells. The classes that can be used are: .table-primary, .table-success,
+        .table-info, .table-warning, .table-danger, .table-active,
+        .table-secondary, .table-light and .table-dark:
+      </p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Default</td>
+            <td>Defaultson</td>
+            <td>def@somemail.com</td>
+          </tr>
+          <tr class="table-primary">
+            <td>Primary</td>
+            <td>Joe</td>
+            <td>joe@example.com</td>
+          </tr>
+          <tr class="table-success">
+            <td>Success</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr class="table-danger">
+            <td>Danger</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr class="table-info">
+            <td>Info</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+          <tr class="table-warning">
+            <td>Warning</td>
+            <td>Refs</td>
+            <td>bo@example.com</td>
+          </tr>
+          <tr class="table-active">
+            <td>Active</td>
+            <td>Activeson</td>
+            <td>act@example.com</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>Secondary</td>
+            <td>Secondson</td>
+            <td>sec@example.com</td>
+          </tr>
+          <tr class="table-light">
+            <td>Light</td>
+            <td>Angie</td>
+            <td>angie@example.com</td>
+          </tr>
+          <tr class="table-dark">
+            <td>Dark</td>
+            <td>Bo</td>
+            <td>bo@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--Bạn cũng có thể sử dụng bất kỳ lớp ngữ cảnh nào để chỉ thêm màu nền cho tiêu đề bảng:-->
+    <div class="container mt-3">
+      <h2>Table Head Colors</h2>
+      <p>
+        You can use any of the contextual classes to only add a color to the
+        table header:
+      </p>
+      <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table">
+        <thead class="table-success">
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--Lớp này .table-smlàm cho bảng nhỏ hơn bằng cách cắt một nửa phần đệm của ô:-->
+    <div class="container mt-3">
+      <h2>Table Head Colors</h2>
+      <p>
+        You can use any of the contextual classes to only add a color to the
+        table header:
+      </p>
+      <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table">
+        <thead class="table-success">
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--Lớp này .table-responsivethêm thanh cuộn vào bảng khi cần (khi bảng quá lớn theo chiều ngang):-->
+    <div class="container mt-3">
+      <h2>Responsive Table</h2>
+      <p>
+        The .table-responsive class adds a scrollbar to the table when needed:
+      </p>
+
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Firstname</th>
+              <th>Lastname</th>
+              <th>Age</th>
+              <th>City</th>
+              <th>Country</th>
+              <th>Sex</th>
+              <th>Example</th>
+              <th>Example</th>
+              <th>Example</th>
+              <th>Example</th>
+              <th>Example</th>
+              <th>Example</th>
+              <th>Example</th>
+              <th>Example</th>
+              <th>Example</th>
+              <th>Example</th>
+              <th>Example</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Anna</td>
+              <td>Pitt</td>
+              <td>35</td>
+              <td>New York</td>
+              <td>USA</td>
+              <td>Female</td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

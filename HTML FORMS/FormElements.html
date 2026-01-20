@@ -1,0 +1,90 @@
+<!--Phần tử HTML <form>có thể chứa một hoặc nhiều phần tử biểu mẫu sau:
+
+<input>
+<label>
+<select>
+<textarea>
+<button>
+<fieldset>
+<legend>
+<datalist>
+<output>
+<option>
+<optgroup>-->
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Hoang Manh Cuong_2321050103</h1>
+    <h2>The input Element</h2>
+
+    <form action="/action_page.php">
+      <label for="fname">First name:</label><br />
+      <input type="text" id="fname" name="fname" /><br /><br />
+      <input type="submit" value="Submit" />
+    </form>
+    <h2>The select Element</h2>
+
+    <p>The select element defines a drop-down list:</p>
+
+    <form action="/action_page.php">
+      <label for="cars">Choose a car:</label>
+      <!--Thuộc tính select định nghĩa 1 danh sách thả xuống
+        Phần tử này <option>xác định một tùy chọn có thể được chọn.
+
+        Theo mặc định, mục đầu tiên trong danh sách thả xuống sẽ được chọn.
+
+        Để xác định một tùy chọn được chọn trước, hãy thêm selectedthuộc tính vào tùy chọn-->
+      <select id="cars" name="cars" size="4">
+        <!--Thuộc tính size để chỉ định số lượng giá trị hiển thị. multiple cho phép người dùng chọn nhiều hơn 1 giá trị-->
+        <option value="volvo" selected>Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="fiat">Fiat</option>
+        <option value="audi">Audi</option>
+      </select>
+      <textarea name="message" rows="10" cols="30">
+        The cat was playing in the garden.
+        </textarea
+      >
+      <!--Phần tử này <textarea>xác định một trường nhập liệu nhiều dòng (một vùng văn bản)-->
+      <input type="submit" />
+      <!--<button type="button" onclick="alert('Hello World!')">Click Me!</button>
+        Phần tử <button> định nghĩa một nút có thể nhấp được -->
+      <fieldset>
+        <legend>Personalia:</legend>
+        <label for="fname">First name:</label><br />
+        <input type="text" id="fname" name="fname" value="John" /><br />
+        <label for="lname">Last name:</label><br />
+        <input type="text" id="lname" name="lname" value="Doe" /><br /><br />
+        <input type="submit" value="Submit" />
+      </fieldset>
+      <!--Phần tử này <fieldset>được sử dụng để nhóm dữ liệu có liên quan trong một biểu mẫu.
+
+        Phần tử này <legend>xác định chú thích cho <fieldset> phần tử.-->
+
+      <input list="browsers" />
+      <datalist id="browsers">
+        <option value="Edge"></option>
+        <option value="Firefox"></option>
+        <option value="Chrome"></option>
+        <option value="Opera"></option>
+        <option value="Safari"></option>
+      </datalist>
+
+      <!--Phần tử này <datalist>chỉ định danh sách các tùy chọn được xác định trước cho một <input>phần tử.
+
+        Người dùng sẽ thấy danh sách thả xuống các tùy chọn được xác định trước khi họ nhập dữ liệu.
+
+        Thuộc tính list của <input>phần tử phải tham chiếu tới idthuộc tính của <datalist>phần tử.-->
+
+      oninput="x.value=parseInt(a.value)+parseInt(b.value)"> 0
+      <input type="range" id="a" name="a" value="50" />
+      100 +
+      <input type="number" id="b" name="b" value="50" />
+      =
+      <output name="x" for="a b"></output>
+      <br /><br />
+      <input type="submit" />
+      <!--Phần tử này <output>biểu thị kết quả của phép tính (giống như phép tính được thực hiện bằng tập lệnh).-->
+    </form>
+  </body>
+</html>
