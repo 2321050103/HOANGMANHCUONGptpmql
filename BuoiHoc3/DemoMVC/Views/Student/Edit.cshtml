@@ -1,0 +1,23 @@
+@model DemoMVC.Models.Student
+
+<h2>Edit Student</h2>
+
+<form asp-action="Edit">
+
+<input type="hidden" asp-for="Id"/>
+
+Name
+<input asp-for="Name"/>
+<br/>
+
+Age
+<input asp-for="Age"/>
+<br/>
+
+Email
+<input asp-for="Email"/>
+<br/>
+
+<button type="submit">Update</button>
+
+</form>

@@ -11,6 +11,8 @@ namespace DemoMVC.Data
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Student> Students { get; set; }
+    
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,4 +23,5 @@ namespace DemoMVC.Data
             base.OnModelCreating(modelBuilder);
         }
     }
+   
 }
