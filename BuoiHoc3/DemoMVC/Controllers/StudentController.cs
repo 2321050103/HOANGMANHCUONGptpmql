@@ -14,68 +14,102 @@ namespace DemoMVC.Controllers
             _context = context;
         }
 
-        // READ
+        // ================== READ ==================
         public IActionResult Index()
         {
             var students = _context.Students.ToList();
             return View(students);
         }
 
-        // CREATE GET
+        // ================== CREATE ==================
         public IActionResult Create()
         {
             return View();
         }
 
-        // CREATE POST
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Student s)
         {
             if (ModelState.IsValid)
             {
                 _context.Students.Add(s);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             return View(s);
         }
 
-        // EDIT GET
-        public IActionResult Edit(int id)
+        // ================== EDIT ==================
+        public IActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return View("NotFound");
+            }
+
             var student = _context.Students.Find(id);
+
+            if (student == null)
+            {
+                return View("NotFound");
+            }
+
             return View(student);
         }
 
-        // EDIT POST
         [HttpPost]
-        public IActionResult Edit(Student s)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Student s)
         {
+            if (id != s.Id)
+            {
+                return View("NotFound");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Students.Update(s);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
+
             return View(s);
         }
 
-        // DELETE GET
-        public IActionResult Delete(int id)
+        // ================== DELETE ==================
+        public IActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return View("NotFound");
+            }
+
             var student = _context.Students.Find(id);
+
+            if (student == null)
+            {
+                return View("NotFound");
+            }
+
             return View(student);
         }
 
-        // DELETE POST
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             var student = _context.Students.Find(id);
+
+            if (student == null)
+            {
+                return View("NotFound");
+            }
+
             _context.Students.Remove(student);
             _context.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
