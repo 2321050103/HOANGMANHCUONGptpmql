@@ -1,0 +1,27 @@
+﻿@model OrderManagementMVC.Models.Product
+
+@{
+    ViewData["Title"] = "Chi tiet san pham";
+}
+
+<h2>Chi tiet san pham</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Ma san pham</dt>
+    <dd class="col-sm-9">@Model.Id</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Name)</dt>
+    <dd class="col-sm-9">@Model.Name</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Price)</dt>
+    <dd class="col-sm-9">@Model.Price.ToString("N0")</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Stock)</dt>
+    <dd class="col-sm-9">@Model.Stock</dd>
+
+    <dt class="col-sm-3">So dong trong chi tiet don hang</dt>
+    <dd class="col-sm-9">@Model.OrderDetails.Count</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Sua</a>
+<a asp-action="Index" class="btn btn-secondary">Quay lai</a>

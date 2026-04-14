@@ -1,0 +1,23 @@
+﻿@model OrderManagementMVC.Models.Product
+
+@{
+    ViewData["Title"] = "Xoa san pham";
+}
+
+<h2>Xoa san pham</h2>
+
+<div class="alert alert-warning">Ban co chac muon xoa san pham nay khong?</div>
+
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Name)</dt>
+    <dd class="col-sm-9">@Model.Name</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Price)</dt>
+    <dd class="col-sm-9">@Model.Price.ToString("N0")</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input asp-for="Id" type="hidden" />
+    <button type="submit" class="btn btn-danger">Xoa</button>
+    <a asp-action="Index" class="btn btn-secondary">Huy</a>
+</form>

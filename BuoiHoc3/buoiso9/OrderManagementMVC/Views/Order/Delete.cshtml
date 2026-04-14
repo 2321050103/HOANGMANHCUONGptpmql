@@ -1,0 +1,26 @@
+﻿@model OrderManagementMVC.Models.Order
+
+@{
+    ViewData["Title"] = "Xoá đơn hàng";
+}
+
+<h2>Xoá đơn hàng</h2>
+
+<div class="alert alert-warning">Ban co chac muon xoa don hang nay khong?</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Khách hàng</dt>
+    <dd class="col-sm-9">@Model.Customer?.Name</dd>
+
+    <dt class="col-sm-3">Ngày đặt</dt>
+    <dd class="col-sm-9">@Model.OrderDate.ToString("dd/MM/yyyy")</dd>
+
+    <dt class="col-sm-3">Tônrg tiền</dt>
+    <dd class="col-sm-9">@Model.TotalAmount.ToString("N0")</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input asp-for="Id" type="hidden" />
+    <button type="submit" class="btn btn-danger">Xoá</button>
+    <a asp-action="Index" class="btn btn-secondary">Huỷ</a>
+</form>

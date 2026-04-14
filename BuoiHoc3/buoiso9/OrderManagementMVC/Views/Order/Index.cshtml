@@ -1,0 +1,40 @@
+﻿@model IEnumerable<OrderManagementMVC.Models.Order>
+
+@{
+    ViewData["Title"] = "Đơn hàng";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Danh sach don hang</h2>
+    <a asp-action="Create" class="btn btn-primary">Thêm đơn hàng</a>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Mã đơn</th>
+            <th>Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>So dong san pham</th>
+            <th>Tổng tiền</th>
+            <th class="text-center">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Customer?.Name</td>
+            <td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
+            <td>@item.OrderDetails.Count</td>
+            <td>@item.TotalAmount.ToString("N0")</td>
+            <td class="text-center">
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Chi tiet</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Sua</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Xoa</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

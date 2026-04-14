@@ -1,0 +1,51 @@
+﻿@model IEnumerable<OrderManagementMVC.Models.Order>
+
+@{
+    ViewData["Title"] = "Don hang theo khach hang";
+}
+
+<h2>Don hang cua khach: @ViewBag.CustomerName</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Khach hang nay chua co don hang nao.</div>
+}
+else
+{
+    @foreach (var order in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between">
+                <span>Don hang #@order.Id</span>
+                <span>Ngay dat: @order.OrderDate.ToString("dd/MM/yyyy")</span>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>San pham</th>
+                            <th>So luong</th>
+                            <th>Don gia</th>
+                            <th>Thanh tien</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in order.OrderDetails)
+                    {
+                        <tr>
+                            <td>@item.Product?.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Price.ToString("N0")</td>
+                            <td>@((item.Quantity * item.Price).ToString("N0"))</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+
+                <div class="fw-bold text-end">Tong tien: @order.TotalAmount.ToString("N0")</div>
+            </div>
+        </div>
+    }
+}
+
+<a asp-controller="Customer" asp-action="Index" class="btn btn-secondary">Quay lai khach hang</a>
