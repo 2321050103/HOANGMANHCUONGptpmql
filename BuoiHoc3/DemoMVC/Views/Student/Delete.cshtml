@@ -1,13 +1,15 @@
-@model DemoMVC.Models.Student
+﻿@model DemoMVC.Models.Student
 
-<h2 class="mt-4 text-danger">Delete Student</h2>
+<h2 class="mt-4 text-danger">Xóa sinh viên</h2>
 
-<h4>Bạn có chắc muốn xoá không?</h4>
+<h4>Bạn có chắc muốn xóa không?</h4>
 
 <div>
-    <p><b>Name:</b> @Model.Name</p>
-    <p><b>Age:</b> @Model.Age</p>
+    <p><b>Mã sinh viên:</b> @Model.StudentCode</p>
+    <p><b>Họ tên:</b> @Model.Name</p>
+    <p><b>Tuổi:</b> @Model.Age</p>
     <p><b>Email:</b> @Model.Email</p>
+    <p><b>Khoa:</b> @(Model.Faculty?.FacultyName ?? "Chưa có khoa")</p>
 </div>
 
 <form asp-action="Delete" method="post">
@@ -15,6 +17,6 @@
 
     <input type="hidden" asp-for="Id" />
 
-    <button type="submit" class="btn btn-danger">Xoá</button>
-    <a asp-action="Index" class="btn btn-secondary">Huỷ</a>
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
 </form>

@@ -21,6 +21,23 @@ namespace DemoMVC.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("DemoMVC.Models.Faculty", b =>
+                {
+                    b.Property<int>("FacultyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FacultyId"));
+
+                    b.Property<string>("FacultyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FacultyId");
+
+                    b.ToTable("Faculties");
+                });
+
             modelBuilder.Entity("DemoMVC.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -57,6 +74,9 @@ namespace DemoMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("FacultyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -64,7 +84,25 @@ namespace DemoMVC.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FacultyId");
+
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("DemoMVC.Models.Student", b =>
+                {
+                    b.HasOne("DemoMVC.Models.Faculty", "Faculty")
+                        .WithMany("Students")
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Faculty");
+                });
+
+            modelBuilder.Entity("DemoMVC.Models.Faculty", b =>
+                {
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

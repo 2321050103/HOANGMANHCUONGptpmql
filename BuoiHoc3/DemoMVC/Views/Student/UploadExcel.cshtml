@@ -1,0 +1,37 @@
+<h2 class="mt-4">Upload Excel sinh viên</h2>
+
+<p>File Excel cần có 5 cột theo đúng thứ tự sau:</p>
+
+<ol>
+    <li><b>StudentCode</b> - Mã sinh viên, ví dụ: SV001</li>
+    <li><b>Name</b> - Họ tên sinh viên</li>
+    <li><b>Age</b> - Tuổi, ví dụ: 20</li>
+    <li><b>Email</b> - Email sinh viên</li>
+    <li><b>FacultyId</b> - Mã khoa, dùng một trong các giá trị: 1, 2, 3</li>
+</ol>
+
+<p>Danh sách khoa hiện tại:</p>
+<ul>
+    <li>1 - Công nghệ thông tin</li>
+    <li>2 - Kinh tế</li>
+    <li>3 - Cơ khí</li>
+</ul>
+
+<div class="alert alert-secondary">
+    Dòng đầu tiên là tiêu đề cột. Ví dụ mẫu:
+    <br />
+    <code>StudentCode | Name | Age| Email  | FacultyId</code>
+</div>
+
+<form asp-action="UploadExcel" method="post" enctype="multipart/form-data" class="mt-3">
+    <div class="mb-3">
+        <input type="file" name="file" class="form-control" accept=".xlsx,.xls" />
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-info mt-3">@ViewBag.Message</div>
+}

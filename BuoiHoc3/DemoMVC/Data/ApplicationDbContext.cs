@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using DemoMVC.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DemoMVC.Data
 {
@@ -12,16 +12,21 @@ namespace DemoMVC.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Student> Students { get; set; }
-    
+        public DbSet<Faculty> Faculties { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>()
                 .Property(p => p.Price)
-                .HasPrecision(18, 2); // 18 tổng số, 2 số sau dấu phẩy
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.Faculty)
+                .WithMany(f => f.Students)
+                .HasForeignKey(s => s.FacultyId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
     }
-   
 }

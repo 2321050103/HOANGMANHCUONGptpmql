@@ -1,95 +1,109 @@
 using DemoMVC.Data;
 using DemoMVC.Models;
+using DemoMVC.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using ClosedXML.Excel;
 
 namespace DemoMVC.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly SchoolRepository _repository;
 
-        public StudentController(ApplicationDbContext context)
+        public StudentController(SchoolRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        // ================== READ ==================
         public IActionResult Index()
         {
-            var students = _context.Students.ToList();
-            return View(students);
+            var data = _repository.GetStudents()
+                .Select(s => new StudentVM
+                {
+                    StudentId = s.Id,
+                    StudentCode = s.StudentCode,
+                    Name = s.Name,
+                    Age = s.Age,
+                    Email = s.Email,
+                    FacultyName = s.Faculty?.FacultyName ?? string.Empty
+                })
+                .ToList();
+
+            return View(data);
         }
 
-        // ================== CREATE ==================
         public IActionResult Create()
         {
+            LoadFacultyDropDownList();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Student s)
+        public IActionResult Create(Student student)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Students.Add(s);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                LoadFacultyDropDownList(student.FacultyId);
+                return View(student);
             }
-            return View(s);
+
+            _repository.AddStudent(student);
+            return RedirectToAction(nameof(Index));
         }
 
-        // ================== EDIT ==================
         public IActionResult Edit(int? id)
         {
             if (id == null)
             {
-                return View("NotFound");
+                return NotFound();
             }
 
-            var student = _context.Students.Find(id);
-
+            var student = _repository.GetStudentById(id.Value);
             if (student == null)
             {
-                return View("NotFound");
+                return NotFound();
             }
 
+            LoadFacultyDropDownList(student.FacultyId);
             return View(student);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Student s)
+        public IActionResult Edit(int id, Student student)
         {
-            if (id != s.Id)
+            if (id != student.Id)
             {
-                return View("NotFound");
+                return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Students.Update(s);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                LoadFacultyDropDownList(student.FacultyId);
+                return View(student);
             }
 
-            return View(s);
+            if (!_repository.UpdateStudent(student))
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
-        // ================== DELETE ==================
         public IActionResult Delete(int? id)
         {
             if (id == null)
             {
-                return View("NotFound");
+                return NotFound();
             }
 
-            var student = _context.Students.Find(id);
-
+            var student = _repository.GetStudentById(id.Value);
             if (student == null)
             {
-                return View("NotFound");
+                return NotFound();
             }
 
             return View(student);
@@ -99,17 +113,92 @@ namespace DemoMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var student = _context.Students.Find(id);
-
-            if (student == null)
+            if (!_repository.DeleteStudent(id))
             {
-                return View("NotFound");
+                return NotFound();
             }
 
-            _context.Students.Remove(student);
-            _context.SaveChanges();
-
             return RedirectToAction(nameof(Index));
+        }
+
+        private void LoadFacultyDropDownList(object? selectedFaculty = null)
+        {
+            ViewBag.FacultyId = new SelectList(
+                _repository.GetFaculties(),
+                "FacultyId",
+                "FacultyName",
+                selectedFaculty);
+        }
+
+        // ================== PHẦN MỚI: UPLOAD EXCEL ==================
+
+        // Hiển thị form upload
+        public IActionResult UploadExcel()
+        {
+            return View();
+        }
+
+        // Xử lý upload + đọc file Excel
+        [HttpPost]
+        public async Task<IActionResult> UploadExcel(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                ViewBag.Message = "File không hợp lệ";
+                return View();
+            }
+
+            // Lưu file tạm
+            var filePath = Path.Combine(Path.GetTempPath(), file.FileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // Đọc dữ liệu từ Excel
+            var students = ReadExcel(filePath);
+
+            // Lưu vào DB
+            foreach (var student in students)
+            {
+                _repository.AddStudent(student);
+            }
+
+            ViewBag.Message = "Upload thành công!";
+            return View();
+        }
+
+        // Hàm đọc Excel
+        private List<Student> ReadExcel(string filePath)
+        {
+            var list = new List<Student>();
+
+            using (var workbook = new XLWorkbook(filePath))
+            {
+                var worksheet = workbook.Worksheet(1);
+                var rows = worksheet.RangeUsed().RowsUsed().Skip(1);
+
+                foreach (var row in rows)
+                {
+                    // Bỏ dòng trống
+                    if (string.IsNullOrEmpty(row.Cell(1).GetValue<string>()))
+                        continue;
+
+                    var student = new Student
+                    {
+                        // ⚠️ PHẢI KHỚP MODEL CỦA BẠN
+                        Name = row.Cell(1).GetValue<string>(),
+
+                        // Gán tạm FacultyId (tránh lỗi)
+                        FacultyId = 1
+                    };
+
+                    list.Add(student);
+                }
+            }
+
+            return list;
         }
     }
 }
