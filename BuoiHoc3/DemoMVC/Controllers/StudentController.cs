@@ -1,9 +1,9 @@
+﻿using ClosedXML.Excel;
 using DemoMVC.Data;
 using DemoMVC.Models;
 using DemoMVC.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ClosedXML.Excel;
 
 namespace DemoMVC.Controllers
 {
@@ -130,25 +130,27 @@ namespace DemoMVC.Controllers
                 selectedFaculty);
         }
 
-        // ================== PHẦN MỚI: UPLOAD EXCEL ==================
-
-        // Hiển thị form upload
         public IActionResult UploadExcel()
         {
             return View();
         }
 
-        // Xử lý upload + đọc file Excel
         [HttpPost]
         public async Task<IActionResult> UploadExcel(IFormFile file)
         {
             if (file == null || file.Length == 0)
             {
-                ViewBag.Message = "File không hợp lệ";
+                ViewBag.Message = "File không hợp lệ.";
                 return View();
             }
 
-            // Lưu file tạm
+            var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+            if (extension != ".xlsx")
+            {
+                ViewBag.Message = "Chỉ hỗ trợ file Excel định dạng .xlsx.";
+                return View();
+            }
+
             var filePath = Path.Combine(Path.GetTempPath(), file.FileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
@@ -156,45 +158,85 @@ namespace DemoMVC.Controllers
                 await file.CopyToAsync(stream);
             }
 
-            // Đọc dữ liệu từ Excel
-            var students = ReadExcel(filePath);
-
-            // Lưu vào DB
-            foreach (var student in students)
+            try
             {
-                _repository.AddStudent(student);
+                var students = ReadExcel(filePath);
+
+                foreach (var student in students)
+                {
+                    _repository.AddStudent(student);
+                }
+
+                ViewBag.Message = $"Upload thành công {students.Count} sinh viên!";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
             }
 
-            ViewBag.Message = "Upload thành công!";
             return View();
         }
 
-        // Hàm đọc Excel
         private List<Student> ReadExcel(string filePath)
         {
             var list = new List<Student>();
+            var validFacultyIds = _repository.GetFaculties()
+                .Select(f => f.FacultyId)
+                .ToHashSet();
 
             using (var workbook = new XLWorkbook(filePath))
             {
                 var worksheet = workbook.Worksheet(1);
-                var rows = worksheet.RangeUsed().RowsUsed().Skip(1);
+                var usedRange = worksheet.RangeUsed();
+
+                if (usedRange == null)
+                {
+                    throw new Exception("File Excel không có dữ liệu.");
+                }
+
+                var rows = usedRange.RowsUsed().Skip(1);
 
                 foreach (var row in rows)
                 {
-                    // Bỏ dòng trống
-                    if (string.IsNullOrEmpty(row.Cell(1).GetValue<string>()))
-                        continue;
-
-                    var student = new Student
+                    var studentCode = row.Cell(1).GetValue<string>().Trim();
+                    if (string.IsNullOrWhiteSpace(studentCode))
                     {
-                        // ⚠️ PHẢI KHỚP MODEL CỦA BẠN
-                        Name = row.Cell(1).GetValue<string>(),
+                        continue;
+                    }
 
-                        // Gán tạm FacultyId (tránh lỗi)
-                        FacultyId = 1
-                    };
+                    var name = row.Cell(2).GetValue<string>().Trim();
+                    var ageText = row.Cell(3).GetValue<string>().Trim();
+                    var email = row.Cell(4).GetValue<string>().Trim();
+                    var facultyIdText = row.Cell(5).GetValue<string>().Trim();
 
-                    list.Add(student);
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        throw new Exception($"Dòng {row.RowNumber()}: Name không được để trống.");
+                    }
+
+                    if (!int.TryParse(ageText, out var age))
+                    {
+                        throw new Exception($"Dòng {row.RowNumber()}: Age phải là số nguyên.");
+                    }
+
+                    if (string.IsNullOrWhiteSpace(email))
+                    {
+                        throw new Exception($"Dòng {row.RowNumber()}: Email không được để trống.");
+                    }
+
+                    if (!int.TryParse(facultyIdText, out var facultyId) || !validFacultyIds.Contains(facultyId))
+                    {
+                        throw new Exception($"Dòng {row.RowNumber()}: FacultyId phải là 1, 2 hoặc 3.");
+                    }
+
+                    list.Add(new Student
+                    {
+                        StudentCode = studentCode,
+                        Name = name,
+                        Age = age,
+                        Email = email,
+                        FacultyId = facultyId
+                    });
                 }
             }
 
