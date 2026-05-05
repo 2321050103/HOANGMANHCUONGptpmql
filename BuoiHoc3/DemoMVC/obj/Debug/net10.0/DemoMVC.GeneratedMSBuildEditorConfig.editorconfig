@@ -34,12 +34,32 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVtb1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/PTPMQL/PTPMQL/BuoiHoc3/DemoMVC/Views/DeviceCategories/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV2aWNlQ2F0ZWdvcmllc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PTPMQL/PTPMQL/BuoiHoc3/DemoMVC/Views/Devices/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV2aWNlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PTPMQL/PTPMQL/BuoiHoc3/DemoMVC/Views/ExportReceipts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwb3J0UmVjZWlwdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/PTPMQL/PTPMQL/BuoiHoc3/DemoMVC/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/PTPMQL/PTPMQL/BuoiHoc3/DemoMVC/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PTPMQL/PTPMQL/BuoiHoc3/DemoMVC/Views/ImportReceipts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW1wb3J0UmVjZWlwdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PTPMQL/PTPMQL/BuoiHoc3/DemoMVC/Views/Inventory/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50b3J5XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/PTPMQL/PTPMQL/BuoiHoc3/DemoMVC/Views/Shared/Error.cshtml]
@@ -72,6 +92,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/PTPMQL/PTPMQL/BuoiHoc3/DemoMVC/Views/Student/UploadExcel.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxVcGxvYWRFeGNlbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PTPMQL/PTPMQL/BuoiHoc3/DemoMVC/Views/Suppliers/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcGxpZXJzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/PTPMQL/PTPMQL/BuoiHoc3/DemoMVC/Views/_ViewImports.cshtml]

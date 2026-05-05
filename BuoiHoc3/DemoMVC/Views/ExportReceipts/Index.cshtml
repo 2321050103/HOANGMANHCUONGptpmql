@@ -1,0 +1,76 @@
+@model DemoMVC.Models.ViewModels.InventoryVM
+@{
+    ViewData["Title"] = "Xuat kho";
+}
+
+<h2>Xuat kho</h2>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<h5>@(Model.ExportForm.ReceiptId == 0 ? "Them phieu xuat" : "Cap nhat phieu xuat")</h5>
+<form asp-action="Create" method="post" class="mb-4">
+    <input type="hidden" name="ReceiptId" value="@Model.ExportForm.ReceiptId" />
+    <div class="row g-2 mb-2">
+        <div class="col-md-3">
+            <input name="Date" type="date" value="@Model.ExportForm.Date.ToString("yyyy-MM-dd")" class="form-control" />
+        </div>
+        <div class="col-md-5">
+            <input name="Note" value="@Model.ExportForm.Note" class="form-control" placeholder="Ghi chu" />
+        </div>
+    </div>
+
+    @for (var i = 0; i < Model.ExportForm.Lines.Count; i++)
+    {
+        <div class="row g-2 mb-2">
+            <div class="col-md-4">
+                <select name="Lines[@i].DeviceId" class="form-select">
+                    <option value="">-- Chon thiet bi --</option>
+                    @foreach (var option in Model.DeviceOptions!)
+                    {
+                        <option value="@option.Value" selected="@(option.Value == Model.ExportForm.Lines[i].DeviceId.ToString())">
+                            @option.Text
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input name="Lines[@i].Quantity" value="@Model.ExportForm.Lines[i].Quantity" class="form-control" placeholder="So luong" />
+            </div>
+            <div class="col-md-3">
+                <input name="Lines[@i].Price" value="@Model.ExportForm.Lines[i].Price" class="form-control" placeholder="Don gia xuat" />
+            </div>
+        </div>
+    }
+
+    <button class="btn btn-warning" type="submit">
+        @(Model.ExportForm.ReceiptId == 0 ? "Them phieu xuat" : "Cap nhat phieu xuat")
+    </button>
+    @if (Model.ExportForm.ReceiptId != 0)
+    {
+        <a asp-action="Index" class="btn btn-secondary">Huy sua</a>
+    }
+</form>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Ngày xuất</th>
+        <th>Ghi chú</th>
+        <th>Tong tien</th>
+        <th style="width:150px"></th>
+    </tr>
+    @foreach (var item in Model.ExportReceipts)
+    {
+        <tr>
+            <td>@item.Date.ToString("dd/MM/yyyy")</td>
+            <td>@item.Note</td>
+            <td>@item.Total.ToString("N0")</td>
+            <td>
+                <a asp-action="Index" asp-route-editId="@item.ReceiptId" class="btn btn-primary btn-sm">Sua</a>
+                <form asp-action="Delete" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="@item.ReceiptId" />
+                    <button class="btn btn-danger btn-sm" type="submit">Xoa</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,84 @@
+@model IEnumerable<DemoMVC.Models.ViewModels.DeviceItemVM>
+@{
+    var device = (DemoMVC.Models.Device)ViewBag.Device;
+    ViewData["Title"] = "Thiet bi";
+}
+
+<h2>Thiet bi</h2>
+
+<form asp-action="Index" method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input name="keyword" value="@ViewBag.Keyword" class="form-control" placeholder="Tim ma hoac ten thiet bi" />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100" type="submit">Tim</button>
+    </div>
+</form>
+
+<h5>@(device.DeviceId == 0 ? "Them thiet bi" : "Cap nhat thiet bi")</h5>
+<form asp-action="Save" method="post" class="row g-2 mb-3">
+    <input type="hidden" name="DeviceId" value="@device.DeviceId" />
+    <div class="col-md-2">
+        <input name="DeviceCode" value="@device.DeviceCode" class="form-control" placeholder="Ma" />
+    </div>
+    <div class="col-md-3">
+        <input name="DeviceName" value="@device.DeviceName" class="form-control" placeholder="Ten thiet bi" />
+    </div>
+    <div class="col-md-2">
+        <input name="Quantity" value="@device.Quantity" class="form-control" placeholder="Ton" />
+    </div>
+    <div class="col-md-2">
+        <input name="Price" value="@device.Price" class="form-control" placeholder="Don gia" />
+    </div>
+    <div class="col-md-3">
+        <select name="DeviceCategoryId" asp-items="ViewBag.CategoryOptions" class="form-select">
+            <option value="">-- Loai --</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select name="SupplierId" asp-items="ViewBag.SupplierOptions" class="form-select">
+            <option value="">-- Nha cung cap --</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-success w-100" type="submit">
+            @(device.DeviceId == 0 ? "Them moi" : "Cap nhat")
+        </button>
+    </div>
+    @if (device.DeviceId != 0)
+    {
+        <div class="col-md-2">
+            <a asp-action="Index" class="btn btn-secondary w-100">Huy sua</a>
+        </div>
+    }
+</form>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Ma</th>
+        <th>Ten</th>
+        <th>Loai</th>
+        <th>Nha cung cap</th>
+        <th>Ton</th>
+        <th>Don gia</th>
+        <th style="width:150px"></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.DeviceCode</td>
+            <td>@item.DeviceName</td>
+            <td>@item.CategoryName</td>
+            <td>@item.SupplierName</td>
+            <td>@item.Quantity</td>
+            <td>@item.Price.ToString("N0")</td>
+            <td>
+                <a asp-action="Index" asp-route-editId="@item.DeviceId" class="btn btn-primary btn-sm">Sua</a>
+                <form asp-action="Delete" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="@item.DeviceId" />
+                    <button class="btn btn-danger btn-sm" type="submit">Xoa</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

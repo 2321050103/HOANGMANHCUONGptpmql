@@ -1,0 +1,56 @@
+@model IEnumerable<DemoMVC.Models.Supplier>
+@{
+    var supplier = (DemoMVC.Models.Supplier)ViewBag.Supplier;
+    ViewData["Title"] = "Nha cung cap";
+}
+
+<h2>Nha cung cap</h2>
+
+<h5>@(supplier.SupplierId == 0 ? "Them nha cung cap" : "Cap nhat nha cung cap")</h5>
+<form asp-action="Save" method="post" class="row g-2 mb-3">
+    <input type="hidden" name="SupplierId" value="@supplier.SupplierId" />
+    <div class="col-md-3">
+        <input name="SupplierName" value="@supplier.SupplierName" class="form-control" placeholder="Ten nha cung cap" />
+    </div>
+    <div class="col-md-4">
+        <input name="Address" value="@supplier.Address" class="form-control" placeholder="Dia chi" />
+    </div>
+    <div class="col-md-3">
+        <input name="Phone" value="@supplier.Phone" class="form-control" placeholder="So dien thoai" />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-success w-100" type="submit">
+            @(supplier.SupplierId == 0 ? "Them moi" : "Cap nhat")
+        </button>
+    </div>
+    @if (supplier.SupplierId != 0)
+    {
+        <div class="col-md-2">
+            <a asp-action="Index" class="btn btn-secondary w-100">Huy sua</a>
+        </div>
+    }
+</form>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Ten nha cung cap</th>
+        <th>Dia chi</th>
+        <th>So dien thoai</th>
+        <th style="width:150px"></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.SupplierName</td>
+            <td>@item.Address</td>
+            <td>@item.Phone</td>
+            <td>
+                <a asp-action="Index" asp-route-editId="@item.SupplierId" class="btn btn-primary btn-sm">Sua</a>
+                <form asp-action="Delete" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="@item.SupplierId" />
+                    <button class="btn btn-danger btn-sm" type="submit">Xoa</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

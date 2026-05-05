@@ -1,0 +1,55 @@
+@model IEnumerable<DemoMVC.Models.DeviceCategory>
+@{
+    var category = (DemoMVC.Models.DeviceCategory)ViewBag.Category;
+    ViewData["Title"] = "Loai thiet bi";
+}
+
+<h2>Loai thiet bi</h2>
+
+<form asp-action="Index" method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input name="keyword" value="@ViewBag.Keyword" class="form-control" placeholder="Tim loai thiet bi" />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100" type="submit">Tim</button>
+    </div>
+</form>
+
+<h5>@(category.DeviceCategoryId == 0 ? "Them loai thiet bi" : "Cap nhat loai thiet bi")</h5>
+<form asp-action="Save" method="post" class="row g-2 mb-3">
+    <input type="hidden" name="DeviceCategoryId" value="@category.DeviceCategoryId" />
+    <div class="col-md-5">
+        <input name="CategoryName" value="@category.CategoryName" class="form-control" placeholder="Ten loai thiet bi" />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-success w-100" type="submit">
+            @(category.DeviceCategoryId == 0 ? "Them moi" : "Cap nhat")
+        </button>
+    </div>
+    @if (category.DeviceCategoryId != 0)
+    {
+        <div class="col-md-2">
+            <a asp-action="Index" class="btn btn-secondary w-100">Huy sua</a>
+        </div>
+    }
+</form>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Ten loai</th>
+        <th style="width:150px"></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.CategoryName</td>
+            <td>
+                <a asp-action="Index" asp-route-editId="@item.DeviceCategoryId" class="btn btn-primary btn-sm">Sua</a>
+                <form asp-action="Delete" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="@item.DeviceCategoryId" />
+                    <button class="btn btn-danger btn-sm" type="submit">Xoa</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
