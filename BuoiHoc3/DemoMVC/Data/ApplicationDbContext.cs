@@ -1,4 +1,5 @@
 using DemoMVC.Models;
+using DemoMVC.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoMVC.Data
@@ -10,7 +11,12 @@ namespace DemoMVC.Data
         {
         }
 
-        public DbSet<Product> Products { get; set; }
+        public DbSet<DemoMVC.Models.Product> SimpleProducts { get; set; }
+        public DbSet<DemoMVC.Models.Entities.Product> Products { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
@@ -23,8 +29,22 @@ namespace DemoMVC.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>()
+            modelBuilder.Entity<DemoMVC.Models.Product>()
+                .ToTable("Products")
                 .Property(p => p.Price)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<DemoMVC.Models.Entities.Product>()
+                .ToTable("ShopProducts")
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Book>()
+                .Property(b => b.Price)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<OrderDetail>()
+                .Property(d => d.UnitPrice)
                 .HasPrecision(18, 2);
 
             modelBuilder.Entity<Device>()

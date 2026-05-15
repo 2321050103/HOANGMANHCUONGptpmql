@@ -1,63 +1,226 @@
-﻿@model IEnumerable<DemoMVC.Models.ViewModels.StudentVM>
+@model IEnumerable<DemoMVC.Models.ViewModels.StudentVM>
 
-<h2 class="mt-4">Danh sách sinh viên</h2>
+<h2 class="mt-4">Quan ly sinh vien bang Ajax</h2>
 
-<p>
-    <a asp-action="Create" asp-controller="Student" class="btn btn-success mb-3">
-        + Thêm sinh viên
-    </a>
-    <a asp-action="UploadExcel" asp-controller="Student" class="btn btn-outline-primary mb-3 ms-2">
-        Upload Excel
-    </a>
-</p>
+<div class="row mb-4">
+    <div class="col-md-8">
+        <input type="hidden" id="studentId" />
+
+        <div class="row g-2">
+            <div class="col-md-6">
+                <input id="studentCode" class="form-control" placeholder="Ma sinh vien" />
+            </div>
+            <div class="col-md-6">
+                <input id="name" class="form-control" placeholder="Ho ten" />
+            </div>
+            <div class="col-md-4">
+                <input id="age" class="form-control" type="number" placeholder="Tuoi" />
+            </div>
+            <div class="col-md-4">
+                <input id="email" class="form-control" type="email" placeholder="Email" />
+            </div>
+            <div class="col-md-4">
+                <select id="facultyId" class="form-select">
+                    <option value="">-- Chon khoa --</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button type="button" class="btn btn-success" onclick="saveStudent()">Luu</button>
+            <button type="button" class="btn btn-secondary" onclick="clearForm()">Lam moi</button>
+            <a asp-action="UploadExcel" asp-controller="Student" class="btn btn-outline-primary ms-2">
+                Upload Excel
+            </a>
+        </div>
+
+        <div id="message" class="mt-3"></div>
+    </div>
+</div>
 
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
         <tr>
-            <th>Mã sinh viên</th>
-            <th>Họ tên</th>
-            <th>Tuổi</th>
+            <th>Ma sinh vien</th>
+            <th>Ho ten</th>
+            <th>Tuoi</th>
             <th>Email</th>
             <th>Khoa</th>
-            <th style="width:150px;">Thao tác</th>
+            <th style="width:170px;">Thao tac</th>
         </tr>
     </thead>
-    <tbody>
-        @if (Model != null && Model.Any())
-        {
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.StudentCode</td>
-                    <td>@item.Name</td>
-                    <td>@item.Age</td>
-                    <td>@item.Email</td>
-                    <td>@(string.IsNullOrEmpty(item.FacultyName) ? "Chưa có khoa" : item.FacultyName)</td>
-                    <td>
-                        <a asp-action="Edit"
-                           asp-controller="Student"
-                           asp-route-id="@item.StudentId"
-                           class="btn btn-primary btn-sm">
-                            Sửa
-                        </a>
-
-                        <a asp-action="Delete"
-                           asp-controller="Student"
-                           asp-route-id="@item.StudentId"
-                           class="btn btn-danger btn-sm">
-                            Xóa
-                        </a>
-                    </td>
-                </tr>
-            }
-        }
-        else
-        {
-            <tr>
-                <td colspan="6" class="text-center text-muted">
-                    Chưa có sinh viên nào
-                </td>
-            </tr>
-        }
+    <tbody id="studentTable">
+        <tr>
+            <td colspan="6" class="text-center text-muted">Dang tai du lieu...</td>
+        </tr>
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        let students = [];
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadFaculties();
+            loadStudents();
+        });
+
+        function loadStudents() {
+            fetch('/Student/GetStudents')
+                .then(response => response.json())
+                .then(data => {
+                    students = data;
+                    let html = '';
+
+                    if (data.length === 0) {
+                        html = '<tr><td colspan="6" class="text-center text-muted">Chua co sinh vien nao</td></tr>';
+                    } else {
+                        data.forEach(student => {
+                            html += `
+                                <tr>
+                                    <td>${escapeHtml(student.studentCode)}</td>
+                                    <td>${escapeHtml(student.name)}</td>
+                                    <td>${student.age}</td>
+                                    <td>${escapeHtml(student.email)}</td>
+                                    <td>${escapeHtml(student.facultyName || 'Chua co khoa')}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm"
+                                            onclick="editStudent(${student.id})">
+                                            Sua
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            onclick="deleteStudent(${student.id})">
+                                            Xoa
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    }
+
+                    document.getElementById('studentTable').innerHTML = html;
+                })
+                .catch(() => showMessage('Khong tai duoc danh sach sinh vien.', 'danger'));
+        }
+
+        function loadFaculties() {
+            fetch('/Student/GetFaculties')
+                .then(response => response.json())
+                .then(data => {
+                    let html = '<option value="">-- Chon khoa --</option>';
+
+                    data.forEach(faculty => {
+                        html += `<option value="${faculty.facultyId}">${escapeHtml(faculty.facultyName)}</option>`;
+                    });
+
+                    document.getElementById('facultyId').innerHTML = html;
+                })
+                .catch(() => showMessage('Khong tai duoc danh sach khoa.', 'danger'));
+        }
+
+        function saveStudent() {
+            const id = document.getElementById('studentId').value;
+            const facultyId = document.getElementById('facultyId').value;
+
+            const student = {
+                id: id ? parseInt(id) : 0,
+                studentCode: document.getElementById('studentCode').value.trim(),
+                name: document.getElementById('name').value.trim(),
+                age: parseInt(document.getElementById('age').value),
+                email: document.getElementById('email').value.trim(),
+                facultyId: facultyId ? parseInt(facultyId) : 0
+            };
+
+            if (!student.studentCode || !student.name || !student.email || !student.age || !student.facultyId) {
+                showMessage('Vui long nhap day du thong tin.', 'warning');
+                return;
+            }
+
+            const url = id ? '/Student/AjaxUpdate' : '/Student/AjaxCreate';
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(student)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+
+                    return response.json();
+                })
+                .then(() => {
+                    clearForm();
+                    loadStudents();
+                    showMessage('Luu sinh vien thanh cong.', 'success');
+                })
+                .catch(() => showMessage('Khong luu duoc sinh vien. Kiem tra lai du lieu.', 'danger'));
+        }
+
+        function editStudent(id) {
+            const student = students.find(item => item.id === id);
+
+            if (!student) {
+                showMessage('Khong tim thay sinh vien can sua.', 'danger');
+                return;
+            }
+
+            document.getElementById('studentId').value = student.id;
+            document.getElementById('studentCode').value = student.studentCode;
+            document.getElementById('name').value = student.name;
+            document.getElementById('age').value = student.age;
+            document.getElementById('email').value = student.email;
+            document.getElementById('facultyId').value = student.facultyId;
+            showMessage('Dang sua sinh vien: ' + student.name, 'info');
+        }
+
+        function deleteStudent(id) {
+            if (!confirm('Ban co chac muon xoa sinh vien nay?')) {
+                return;
+            }
+
+            fetch('/Student/AjaxDelete?id=' + id, {
+                method: 'POST'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+
+                    return response.json();
+                })
+                .then(() => {
+                    loadStudents();
+                    clearForm();
+                    showMessage('Xoa sinh vien thanh cong.', 'success');
+                })
+                .catch(() => showMessage('Khong xoa duoc sinh vien.', 'danger'));
+        }
+
+        function clearForm() {
+            document.getElementById('studentId').value = '';
+            document.getElementById('studentCode').value = '';
+            document.getElementById('name').value = '';
+            document.getElementById('age').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('facultyId').value = '';
+        }
+
+        function showMessage(text, type) {
+            document.getElementById('message').innerHTML =
+                `<div class="alert alert-${type} py-2 mb-0">${escapeHtml(text)}</div>`;
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+    </script>
+}

@@ -33,6 +33,78 @@ namespace DemoMVC.Controllers
             return View(data);
         }
 
+        [HttpGet]
+        public IActionResult GetStudents()
+        {
+            var data = _repository.GetStudents()
+                .Select(s => new
+                {
+                    id = s.Id,
+                    studentCode = s.StudentCode,
+                    name = s.Name,
+                    age = s.Age,
+                    email = s.Email,
+                    facultyId = s.FacultyId,
+                    facultyName = s.Faculty?.FacultyName ?? string.Empty
+                })
+                .ToList();
+
+            return Json(data);
+        }
+
+        [HttpGet]
+        public IActionResult GetFaculties()
+        {
+            var data = _repository.GetFaculties()
+                .Select(f => new
+                {
+                    facultyId = f.FacultyId,
+                    facultyName = f.FacultyName
+                })
+                .ToList();
+
+            return Json(data);
+        }
+
+        [HttpPost]
+        public IActionResult AjaxCreate([FromBody] Student student)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _repository.AddStudent(student);
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public IActionResult AjaxUpdate([FromBody] Student student)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!_repository.UpdateStudent(student))
+            {
+                return NotFound();
+            }
+
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public IActionResult AjaxDelete(int id)
+        {
+            if (!_repository.DeleteStudent(id))
+            {
+                return NotFound();
+            }
+
+            return Json(new { success = true });
+        }
+
         public IActionResult Create()
         {
             LoadFacultyDropDownList();

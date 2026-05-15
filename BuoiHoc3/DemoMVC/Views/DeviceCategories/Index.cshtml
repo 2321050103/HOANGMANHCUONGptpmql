@@ -1,55 +1,168 @@
 @model IEnumerable<DemoMVC.Models.DeviceCategory>
 @{
-    var category = (DemoMVC.Models.DeviceCategory)ViewBag.Category;
     ViewData["Title"] = "Loai thiet bi";
 }
 
 <h2>Loai thiet bi</h2>
 
-<form asp-action="Index" method="get" class="row g-2 mb-3">
-    <div class="col-md-4">
-        <input name="keyword" value="@ViewBag.Keyword" class="form-control" placeholder="Tim loai thiet bi" />
-    </div>
-    <div class="col-md-2">
-        <button class="btn btn-primary w-100" type="submit">Tim</button>
-    </div>
-</form>
+<input type="hidden" id="categoryId" />
 
-<h5>@(category.DeviceCategoryId == 0 ? "Them loai thiet bi" : "Cap nhat loai thiet bi")</h5>
-<form asp-action="Save" method="post" class="row g-2 mb-3">
-    <input type="hidden" name="DeviceCategoryId" value="@category.DeviceCategoryId" />
-    <div class="col-md-5">
-        <input name="CategoryName" value="@category.CategoryName" class="form-control" placeholder="Ten loai thiet bi" />
+<div class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input id="keyword" class="form-control" placeholder="Tim loai thiet bi" />
     </div>
     <div class="col-md-2">
-        <button class="btn btn-success w-100" type="submit">
-            @(category.DeviceCategoryId == 0 ? "Them moi" : "Cap nhat")
-        </button>
+        <button type="button" class="btn btn-primary w-100" onclick="loadCategories()">Tim</button>
     </div>
-    @if (category.DeviceCategoryId != 0)
-    {
-        <div class="col-md-2">
-            <a asp-action="Index" class="btn btn-secondary w-100">Huy sua</a>
-        </div>
-    }
-</form>
+</div>
+
+<h5 id="formTitle">Them loai thiet bi</h5>
+<div class="row g-2 mb-3">
+    <div class="col-md-5">
+        <input id="categoryName" class="form-control" placeholder="Ten loai thiet bi" />
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-success w-100" onclick="saveCategory()">Luu</button>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary w-100" onclick="clearCategoryForm()">Lam moi</button>
+    </div>
+</div>
+
+<div id="message" class="mb-3"></div>
 
 <table class="table table-bordered table-striped">
-    <tr>
-        <th>Ten loai</th>
-        <th style="width:150px"></th>
-    </tr>
-    @foreach (var item in Model)
-    {
+    <thead class="table-dark">
         <tr>
-            <td>@item.CategoryName</td>
-            <td>
-                <a asp-action="Index" asp-route-editId="@item.DeviceCategoryId" class="btn btn-primary btn-sm">Sua</a>
-                <form asp-action="Delete" method="post" class="d-inline">
-                    <input type="hidden" name="id" value="@item.DeviceCategoryId" />
-                    <button class="btn btn-danger btn-sm" type="submit">Xoa</button>
-                </form>
-            </td>
+            <th>Ten loai</th>
+            <th style="width:160px">Thao tac</th>
         </tr>
-    }
+    </thead>
+    <tbody id="categoryTable">
+        <tr>
+            <td colspan="2" class="text-center text-muted">Dang tai du lieu...</td>
+        </tr>
+    </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        let categories = [];
+
+        document.addEventListener('DOMContentLoaded', loadCategories);
+
+        function loadCategories() {
+            const keyword = encodeURIComponent(document.getElementById('keyword').value.trim());
+
+            fetch('/DeviceCategories/GetCategories?keyword=' + keyword)
+                .then(response => response.json())
+                .then(data => {
+                    categories = data;
+                    let html = '';
+
+                    if (data.length === 0) {
+                        html = '<tr><td colspan="2" class="text-center text-muted">Chua co loai thiet bi nao</td></tr>';
+                    } else {
+                        data.forEach(category => {
+                            html += `
+                                <tr>
+                                    <td>${escapeHtml(category.categoryName)}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="editCategory(${category.deviceCategoryId})">Sua</button>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteCategory(${category.deviceCategoryId})">Xoa</button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    }
+
+                    document.getElementById('categoryTable').innerHTML = html;
+                })
+                .catch(() => showMessage('Khong tai duoc danh sach loai thiet bi.', 'danger'));
+        }
+
+        function saveCategory() {
+            const id = document.getElementById('categoryId').value;
+            const category = {
+                deviceCategoryId: id ? parseInt(id) : 0,
+                categoryName: document.getElementById('categoryName').value.trim()
+            };
+
+            if (!category.categoryName) {
+                showMessage('Vui long nhap ten loai thiet bi.', 'warning');
+                return;
+            }
+
+            fetch('/DeviceCategories/AjaxSave', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(category)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+
+                    return response.json();
+                })
+                .then(() => {
+                    clearCategoryForm();
+                    loadCategories();
+                    showMessage('Luu loai thiet bi thanh cong.', 'success');
+                })
+                .catch(() => showMessage('Khong luu duoc loai thiet bi.', 'danger'));
+        }
+
+        function editCategory(id) {
+            const category = categories.find(item => item.deviceCategoryId === id);
+            if (!category) {
+                return;
+            }
+
+            document.getElementById('categoryId').value = category.deviceCategoryId;
+            document.getElementById('categoryName').value = category.categoryName;
+            document.getElementById('formTitle').textContent = 'Cap nhat loai thiet bi';
+        }
+
+        function deleteCategory(id) {
+            if (!confirm('Ban co chac muon xoa loai thiet bi nay?')) {
+                return;
+            }
+
+            fetch('/DeviceCategories/AjaxDelete?id=' + id, { method: 'POST' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+
+                    return response.json();
+                })
+                .then(() => {
+                    clearCategoryForm();
+                    loadCategories();
+                    showMessage('Xoa loai thiet bi thanh cong.', 'success');
+                })
+                .catch(() => showMessage('Khong xoa duoc. Loai nay co the dang duoc thiet bi su dung.', 'danger'));
+        }
+
+        function clearCategoryForm() {
+            document.getElementById('categoryId').value = '';
+            document.getElementById('categoryName').value = '';
+            document.getElementById('formTitle').textContent = 'Them loai thiet bi';
+        }
+
+        function showMessage(text, type) {
+            document.getElementById('message').innerHTML =
+                `<div class="alert alert-${type} py-2 mb-0">${escapeHtml(text)}</div>`;
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+    </script>
+}

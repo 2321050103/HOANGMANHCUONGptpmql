@@ -1,0 +1,10 @@
+@model DemoMVC.Models.Entities.Product
+
+<h3>Bạn có chắc muốn xóa sản phẩm này?</h3>
+
+<p><strong>@Model.ProductName</strong></p>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="ProductId" />
+    <button type="submit" class="btn btn-danger">Xóa</button>
+</form>

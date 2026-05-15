@@ -1,84 +1,240 @@
 @model IEnumerable<DemoMVC.Models.ViewModels.DeviceItemVM>
 @{
-    var device = (DemoMVC.Models.Device)ViewBag.Device;
     ViewData["Title"] = "Thiet bi";
 }
 
 <h2>Thiet bi</h2>
 
-<form asp-action="Index" method="get" class="row g-2 mb-3">
-    <div class="col-md-4">
-        <input name="keyword" value="@ViewBag.Keyword" class="form-control" placeholder="Tim ma hoac ten thiet bi" />
-    </div>
-    <div class="col-md-2">
-        <button class="btn btn-primary w-100" type="submit">Tim</button>
-    </div>
-</form>
+<input type="hidden" id="deviceId" />
 
-<h5>@(device.DeviceId == 0 ? "Them thiet bi" : "Cap nhat thiet bi")</h5>
-<form asp-action="Save" method="post" class="row g-2 mb-3">
-    <input type="hidden" name="DeviceId" value="@device.DeviceId" />
+<div class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input id="keyword" class="form-control" placeholder="Tim ma hoac ten thiet bi" />
+    </div>
     <div class="col-md-2">
-        <input name="DeviceCode" value="@device.DeviceCode" class="form-control" placeholder="Ma" />
+        <button type="button" class="btn btn-primary w-100" onclick="loadDevices()">Tim</button>
+    </div>
+</div>
+
+<h5 id="formTitle">Them thiet bi</h5>
+<div class="row g-2 mb-3">
+    <div class="col-md-2">
+        <input id="deviceCode" class="form-control" placeholder="Ma" />
     </div>
     <div class="col-md-3">
-        <input name="DeviceName" value="@device.DeviceName" class="form-control" placeholder="Ten thiet bi" />
+        <input id="deviceName" class="form-control" placeholder="Ten thiet bi" />
     </div>
     <div class="col-md-2">
-        <input name="Quantity" value="@device.Quantity" class="form-control" placeholder="Ton" />
+        <input id="quantity" class="form-control" type="number" min="0" placeholder="Ton" />
     </div>
     <div class="col-md-2">
-        <input name="Price" value="@device.Price" class="form-control" placeholder="Don gia" />
+        <input id="price" class="form-control" type="number" min="0" placeholder="Don gia" />
     </div>
     <div class="col-md-3">
-        <select name="DeviceCategoryId" asp-items="ViewBag.CategoryOptions" class="form-select">
+        <select id="deviceCategoryId" class="form-select">
             <option value="">-- Loai --</option>
         </select>
     </div>
     <div class="col-md-3">
-        <select name="SupplierId" asp-items="ViewBag.SupplierOptions" class="form-select">
+        <select id="supplierId" class="form-select">
             <option value="">-- Nha cung cap --</option>
         </select>
     </div>
     <div class="col-md-2">
-        <button class="btn btn-success w-100" type="submit">
-            @(device.DeviceId == 0 ? "Them moi" : "Cap nhat")
-        </button>
+        <button type="button" class="btn btn-success w-100" onclick="saveDevice()">Luu</button>
     </div>
-    @if (device.DeviceId != 0)
-    {
-        <div class="col-md-2">
-            <a asp-action="Index" class="btn btn-secondary w-100">Huy sua</a>
-        </div>
-    }
-</form>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-secondary w-100" onclick="clearDeviceForm()">Lam moi</button>
+    </div>
+</div>
+
+<div id="message" class="mb-3"></div>
 
 <table class="table table-bordered table-striped">
-    <tr>
-        <th>Ma</th>
-        <th>Ten</th>
-        <th>Loai</th>
-        <th>Nha cung cap</th>
-        <th>Ton</th>
-        <th>Don gia</th>
-        <th style="width:150px"></th>
-    </tr>
-    @foreach (var item in Model)
-    {
+    <thead class="table-dark">
         <tr>
-            <td>@item.DeviceCode</td>
-            <td>@item.DeviceName</td>
-            <td>@item.CategoryName</td>
-            <td>@item.SupplierName</td>
-            <td>@item.Quantity</td>
-            <td>@item.Price.ToString("N0")</td>
-            <td>
-                <a asp-action="Index" asp-route-editId="@item.DeviceId" class="btn btn-primary btn-sm">Sua</a>
-                <form asp-action="Delete" method="post" class="d-inline">
-                    <input type="hidden" name="id" value="@item.DeviceId" />
-                    <button class="btn btn-danger btn-sm" type="submit">Xoa</button>
-                </form>
-            </td>
+            <th>Ma</th>
+            <th>Ten</th>
+            <th>Loai</th>
+            <th>Nha cung cap</th>
+            <th>Ton</th>
+            <th>Don gia</th>
+            <th style="width:160px">Thao tac</th>
         </tr>
-    }
+    </thead>
+    <tbody id="deviceTable">
+        <tr>
+            <td colspan="7" class="text-center text-muted">Dang tai du lieu...</td>
+        </tr>
+    </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        let devices = [];
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadOptions();
+            loadDevices();
+        });
+
+        function loadDevices() {
+            const keyword = encodeURIComponent(document.getElementById('keyword').value.trim());
+
+            fetch('/Devices/GetDevices?keyword=' + keyword)
+                .then(response => response.json())
+                .then(data => {
+                    devices = data;
+                    let html = '';
+
+                    if (data.length === 0) {
+                        html = '<tr><td colspan="7" class="text-center text-muted">Chua co thiet bi nao</td></tr>';
+                    } else {
+                        data.forEach(device => {
+                            html += `
+                                <tr>
+                                    <td>${escapeHtml(device.deviceCode)}</td>
+                                    <td>${escapeHtml(device.deviceName)}</td>
+                                    <td>${escapeHtml(device.categoryName)}</td>
+                                    <td>${escapeHtml(device.supplierName)}</td>
+                                    <td>${device.quantity}</td>
+                                    <td>${Number(device.price).toLocaleString('vi-VN')}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="editDevice(${device.deviceId})">Sua</button>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteDevice(${device.deviceId})">Xoa</button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    }
+
+                    document.getElementById('deviceTable').innerHTML = html;
+                })
+                .catch(() => showMessage('Khong tai duoc danh sach thiet bi.', 'danger'));
+        }
+
+        function loadOptions() {
+            fetch('/Devices/GetOptions')
+                .then(response => response.json())
+                .then(data => {
+                    let categoryHtml = '<option value="">-- Loai --</option>';
+                    let supplierHtml = '<option value="">-- Nha cung cap --</option>';
+
+                    data.categories.forEach(category => {
+                        categoryHtml += `<option value="${category.deviceCategoryId}">${escapeHtml(category.categoryName)}</option>`;
+                    });
+
+                    data.suppliers.forEach(supplier => {
+                        supplierHtml += `<option value="${supplier.supplierId}">${escapeHtml(supplier.supplierName)}</option>`;
+                    });
+
+                    document.getElementById('deviceCategoryId').innerHTML = categoryHtml;
+                    document.getElementById('supplierId').innerHTML = supplierHtml;
+                })
+                .catch(() => showMessage('Khong tai duoc danh sach loai hoac nha cung cap.', 'danger'));
+        }
+
+        function saveDevice() {
+            const id = document.getElementById('deviceId').value;
+            const categoryId = document.getElementById('deviceCategoryId').value;
+            const supplierId = document.getElementById('supplierId').value;
+
+            const device = {
+                deviceId: id ? parseInt(id) : 0,
+                deviceCode: document.getElementById('deviceCode').value.trim(),
+                deviceName: document.getElementById('deviceName').value.trim(),
+                quantity: parseInt(document.getElementById('quantity').value),
+                price: parseFloat(document.getElementById('price').value),
+                deviceCategoryId: categoryId ? parseInt(categoryId) : 0,
+                supplierId: supplierId ? parseInt(supplierId) : 0
+            };
+
+            if (!device.deviceCode || !device.deviceName || Number.isNaN(device.quantity) ||
+                Number.isNaN(device.price) || !device.deviceCategoryId || !device.supplierId) {
+                showMessage('Vui long nhap day du thong tin thiet bi.', 'warning');
+                return;
+            }
+
+            fetch('/Devices/AjaxSave', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(device)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+
+                    return response.json();
+                })
+                .then(() => {
+                    clearDeviceForm();
+                    loadDevices();
+                    showMessage('Luu thiet bi thanh cong.', 'success');
+                })
+                .catch(() => showMessage('Khong luu duoc thiet bi. Kiem tra lai du lieu.', 'danger'));
+        }
+
+        function editDevice(id) {
+            const device = devices.find(item => item.deviceId === id);
+            if (!device) {
+                return;
+            }
+
+            document.getElementById('deviceId').value = device.deviceId;
+            document.getElementById('deviceCode').value = device.deviceCode;
+            document.getElementById('deviceName').value = device.deviceName;
+            document.getElementById('quantity').value = device.quantity;
+            document.getElementById('price').value = device.price;
+            document.getElementById('deviceCategoryId').value = device.deviceCategoryId;
+            document.getElementById('supplierId').value = device.supplierId;
+            document.getElementById('formTitle').textContent = 'Cap nhat thiet bi';
+        }
+
+        function deleteDevice(id) {
+            if (!confirm('Ban co chac muon xoa thiet bi nay?')) {
+                return;
+            }
+
+            fetch('/Devices/AjaxDelete?id=' + id, { method: 'POST' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+
+                    return response.json();
+                })
+                .then(() => {
+                    clearDeviceForm();
+                    loadDevices();
+                    showMessage('Xoa thiet bi thanh cong.', 'success');
+                })
+                .catch(() => showMessage('Khong xoa duoc. Thiet bi co the dang nam trong phieu nhap/xuat.', 'danger'));
+        }
+
+        function clearDeviceForm() {
+            document.getElementById('deviceId').value = '';
+            document.getElementById('deviceCode').value = '';
+            document.getElementById('deviceName').value = '';
+            document.getElementById('quantity').value = '';
+            document.getElementById('price').value = '';
+            document.getElementById('deviceCategoryId').value = '';
+            document.getElementById('supplierId').value = '';
+            document.getElementById('formTitle').textContent = 'Them thiet bi';
+        }
+
+        function showMessage(text, type) {
+            document.getElementById('message').innerHTML =
+                `<div class="alert alert-${type} py-2 mb-0">${escapeHtml(text)}</div>`;
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+    </script>
+}

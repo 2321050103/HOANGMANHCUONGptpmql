@@ -31,6 +31,69 @@ namespace DemoMVC.Controllers
             return View(await query.ToListAsync());
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetCategories(string? keyword)
+        {
+            var query = _context.DeviceCategories.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                query = query.Where(c => c.CategoryName.Contains(keyword));
+            }
+
+            var data = await query
+                .Select(c => new
+                {
+                    deviceCategoryId = c.DeviceCategoryId,
+                    categoryName = c.CategoryName
+                })
+                .ToListAsync();
+
+            return Json(data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AjaxSave([FromBody] DeviceCategory category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (category.DeviceCategoryId == 0)
+            {
+                _context.DeviceCategories.Add(category);
+            }
+            else
+            {
+                var existingCategory = await _context.DeviceCategories.FindAsync(category.DeviceCategoryId);
+                if (existingCategory == null)
+                {
+                    return NotFound();
+                }
+
+                existingCategory.CategoryName = category.CategoryName;
+            }
+
+            await _context.SaveChangesAsync();
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AjaxDelete(int id)
+        {
+            var category = await _context.DeviceCategories.FindAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            _context.DeviceCategories.Remove(category);
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Save(DeviceCategory category)

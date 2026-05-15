@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\PTPMQL\\PTPMQL\\BuoiHoc3\\DemoMVC\\DemoMVC.csproj": {}
+    "D:\\PTPMQL\\PTPMQL\\BuoiHoc3\\DemoMvc\\DemoMVC.csproj": {}
   },
   "projects": {
-    "D:\\PTPMQL\\PTPMQL\\BuoiHoc3\\DemoMVC\\DemoMVC.csproj": {
+    "D:\\PTPMQL\\PTPMQL\\BuoiHoc3\\DemoMvc\\DemoMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\PTPMQL\\PTPMQL\\BuoiHoc3\\DemoMVC\\DemoMVC.csproj",
+        "projectUniqueName": "D:\\PTPMQL\\PTPMQL\\BuoiHoc3\\DemoMvc\\DemoMVC.csproj",
         "projectName": "DemoMVC",
-        "projectPath": "D:\\PTPMQL\\PTPMQL\\BuoiHoc3\\DemoMVC\\DemoMVC.csproj",
+        "projectPath": "D:\\PTPMQL\\PTPMQL\\BuoiHoc3\\DemoMvc\\DemoMVC.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\PTPMQL\\PTPMQL\\BuoiHoc3\\DemoMVC\\obj\\",
+        "outputPath": "D:\\PTPMQL\\PTPMQL\\BuoiHoc3\\DemoMvc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -44,6 +44,10 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "Bogus": {
+              "target": "Package",
+              "version": "[35.6.5, )"
+            },
             "ClosedXML": {
               "target": "Package",
               "version": "[0.105.0, )"
@@ -53,6 +57,10 @@
               "version": "[10.0.3, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[10.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[10.0.3, )"
             },

@@ -1,0 +1,10 @@
+@model DemoMVC.Models.Entities.Customer
+
+<h3>Bạn có chắc muốn xóa?</h3>
+
+<p>@Model.CustomerName</p>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="CustomerId" />
+    <button type="submit" class="btn btn-danger">Xóa</button>
+</form>

@@ -1,0 +1,69 @@
+@using DemoMVC.Models.ViewModels
+
+@model OrderVM
+
+<h2>Tạo đơn hàng</h2>
+
+<form asp-action="Create">
+
+    <div>
+        <label>Khách hàng</label>
+        <select asp-for="CustomerId"
+                asp-items="@(new SelectList(ViewBag.Customers, "CustomerId", "CustomerName"))"></select>
+    </div>
+
+    <div>
+        <label>Ngày</label>
+        <input asp-for="OrderDate" type="date" />
+    </div>
+
+    <h4>Sản phẩm</h4>
+
+    <table class="table" id="productTable">
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th></th>
+        </tr>
+    </table>
+
+    <button type="button" onclick="addRow()">Thêm sản phẩm</button>
+
+    <br />
+    <button type="submit">Lưu</button>
+</form>
+
+<script>
+    let index = 0;
+
+    function addRow() {
+        let row = `
+        <tr>
+            <td>
+                <select name="Details[${index}].ProductId">
+                    ${getProducts()}
+                </select>
+            </td>
+            <td>
+                <input name="Details[${index}].Quantity" type="number" value="1"/>
+            </td>
+            <td>
+                <button type="button" onclick="this.closest('tr').remove()">Xóa</button>
+            </td>
+        </tr>`;
+
+        document.getElementById("productTable").insertAdjacentHTML("beforeend", row);
+        index++;
+    }
+
+    function getProducts() {
+        let options = '';
+        @foreach (var p in ViewBag.Products)
+            {
+                <text>
+                        options += `<option value="@p.ProductId">@p.ProductName</option>`;
+                        </text>
+        }
+        return options;
+    }
+</script>

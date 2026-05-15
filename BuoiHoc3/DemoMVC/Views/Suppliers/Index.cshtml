@@ -1,56 +1,173 @@
 @model IEnumerable<DemoMVC.Models.Supplier>
 @{
-    var supplier = (DemoMVC.Models.Supplier)ViewBag.Supplier;
     ViewData["Title"] = "Nha cung cap";
 }
 
 <h2>Nha cung cap</h2>
 
-<h5>@(supplier.SupplierId == 0 ? "Them nha cung cap" : "Cap nhat nha cung cap")</h5>
-<form asp-action="Save" method="post" class="row g-2 mb-3">
-    <input type="hidden" name="SupplierId" value="@supplier.SupplierId" />
+<input type="hidden" id="supplierId" />
+
+<h5 id="formTitle">Them nha cung cap</h5>
+<div class="row g-2 mb-3">
     <div class="col-md-3">
-        <input name="SupplierName" value="@supplier.SupplierName" class="form-control" placeholder="Ten nha cung cap" />
+        <input id="supplierName" class="form-control" placeholder="Ten nha cung cap" />
     </div>
     <div class="col-md-4">
-        <input name="Address" value="@supplier.Address" class="form-control" placeholder="Dia chi" />
+        <input id="address" class="form-control" placeholder="Dia chi" />
     </div>
     <div class="col-md-3">
-        <input name="Phone" value="@supplier.Phone" class="form-control" placeholder="So dien thoai" />
+        <input id="phone" class="form-control" placeholder="So dien thoai" />
     </div>
-    <div class="col-md-2">
-        <button class="btn btn-success w-100" type="submit">
-            @(supplier.SupplierId == 0 ? "Them moi" : "Cap nhat")
-        </button>
+    <div class="col-md-1">
+        <button type="button" class="btn btn-success w-100" onclick="saveSupplier()">Luu</button>
     </div>
-    @if (supplier.SupplierId != 0)
-    {
-        <div class="col-md-2">
-            <a asp-action="Index" class="btn btn-secondary w-100">Huy sua</a>
-        </div>
-    }
-</form>
+    <div class="col-md-1">
+        <button type="button" class="btn btn-secondary w-100" onclick="clearSupplierForm()">Moi</button>
+    </div>
+</div>
+
+<div id="message" class="mb-3"></div>
 
 <table class="table table-bordered table-striped">
-    <tr>
-        <th>Ten nha cung cap</th>
-        <th>Dia chi</th>
-        <th>So dien thoai</th>
-        <th style="width:150px"></th>
-    </tr>
-    @foreach (var item in Model)
-    {
+    <thead class="table-dark">
         <tr>
-            <td>@item.SupplierName</td>
-            <td>@item.Address</td>
-            <td>@item.Phone</td>
-            <td>
-                <a asp-action="Index" asp-route-editId="@item.SupplierId" class="btn btn-primary btn-sm">Sua</a>
-                <form asp-action="Delete" method="post" class="d-inline">
-                    <input type="hidden" name="id" value="@item.SupplierId" />
-                    <button class="btn btn-danger btn-sm" type="submit">Xoa</button>
-                </form>
-            </td>
+            <th>Ten nha cung cap</th>
+            <th>Dia chi</th>
+            <th>So dien thoai</th>
+            <th style="width:160px">Thao tac</th>
         </tr>
-    }
+    </thead>
+    <tbody id="supplierTable">
+        <tr>
+            <td colspan="4" class="text-center text-muted">Dang tai du lieu...</td>
+        </tr>
+    </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        let suppliers = [];
+
+        document.addEventListener('DOMContentLoaded', loadSuppliers);
+
+        function loadSuppliers() {
+            fetch('/Suppliers/GetSuppliers')
+                .then(response => response.json())
+                .then(data => {
+                    suppliers = data;
+                    let html = '';
+
+                    if (data.length === 0) {
+                        html = '<tr><td colspan="4" class="text-center text-muted">Chua co nha cung cap nao</td></tr>';
+                    } else {
+                        data.forEach(supplier => {
+                            html += `
+                                <tr>
+                                    <td>${escapeHtml(supplier.supplierName)}</td>
+                                    <td>${escapeHtml(supplier.address || '')}</td>
+                                    <td>${escapeHtml(supplier.phone || '')}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="editSupplier(${supplier.supplierId})">Sua</button>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteSupplier(${supplier.supplierId})">Xoa</button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    }
+
+                    document.getElementById('supplierTable').innerHTML = html;
+                })
+                .catch(() => showMessage('Khong tai duoc danh sach nha cung cap.', 'danger'));
+        }
+
+        function saveSupplier() {
+            const id = document.getElementById('supplierId').value;
+            const supplier = {
+                supplierId: id ? parseInt(id) : 0,
+                supplierName: document.getElementById('supplierName').value.trim(),
+                address: document.getElementById('address').value.trim(),
+                phone: document.getElementById('phone').value.trim()
+            };
+
+            if (!supplier.supplierName) {
+                showMessage('Vui long nhap ten nha cung cap.', 'warning');
+                return;
+            }
+
+            fetch('/Suppliers/AjaxSave', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(supplier)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+
+                    return response.json();
+                })
+                .then(() => {
+                    clearSupplierForm();
+                    loadSuppliers();
+                    showMessage('Luu nha cung cap thanh cong.', 'success');
+                })
+                .catch(() => showMessage('Khong luu duoc nha cung cap.', 'danger'));
+        }
+
+        function editSupplier(id) {
+            const supplier = suppliers.find(item => item.supplierId === id);
+            if (!supplier) {
+                return;
+            }
+
+            document.getElementById('supplierId').value = supplier.supplierId;
+            document.getElementById('supplierName').value = supplier.supplierName;
+            document.getElementById('address').value = supplier.address || '';
+            document.getElementById('phone').value = supplier.phone || '';
+            document.getElementById('formTitle').textContent = 'Cap nhat nha cung cap';
+        }
+
+        function deleteSupplier(id) {
+            if (!confirm('Ban co chac muon xoa nha cung cap nay?')) {
+                return;
+            }
+
+            fetch('/Suppliers/AjaxDelete?id=' + id, { method: 'POST' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+
+                    return response.json();
+                })
+                .then(() => {
+                    clearSupplierForm();
+                    loadSuppliers();
+                    showMessage('Xoa nha cung cap thanh cong.', 'success');
+                })
+                .catch(() => showMessage('Khong xoa duoc. Nha cung cap co the dang duoc thiet bi su dung.', 'danger'));
+        }
+
+        function clearSupplierForm() {
+            document.getElementById('supplierId').value = '';
+            document.getElementById('supplierName').value = '';
+            document.getElementById('address').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('formTitle').textContent = 'Them nha cung cap';
+        }
+
+        function showMessage(text, type) {
+            document.getElementById('message').innerHTML =
+                `<div class="alert alert-${type} py-2 mb-0">${escapeHtml(text)}</div>`;
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+    </script>
+}
